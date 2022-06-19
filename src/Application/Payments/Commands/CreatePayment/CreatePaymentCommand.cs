@@ -8,32 +8,34 @@ using SkiSchool.Application.Common.Interfaces;
 using SkiSchool.Domain.Entities;
 
 namespace SkiSchool.Application.Equipments.Commands.CreateEquipment;
-public class CreateEquipmentCommand : IRequest<int>
+public class CreatePaymentCommand : IRequest<int>
 
 {
-    public string Name { get; set; }
-    public string Type { get; set; }
     public decimal Price { get; set; }
-    public bool IsActive { get; set; }
+    public DateTime Date { get; set; }
+    public Equipment Equipment { get; set; }
+    public Timetable Timetable { get; set; }
+    public bool Status { get; set; }
 }
 
-public class CreateEquipmentCommandHandler : IRequestHandler<CreateEquipmentCommand, int>
+public class CreatePaymentCommandHandler : IRequestHandler<CreatePaymentCommand, int>
 {
     private readonly IApplicationDbContext _context;
 
-    public CreateEquipmentCommandHandler(IApplicationDbContext context)
+    public CreatePaymentCommandHandler(IApplicationDbContext context)
     {
         _context = context;
     }
 
-    public async Task<int> Handle(CreateEquipmentCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(CreatePaymentCommand request, CancellationToken cancellationToken)
     {
         var entity = new Equipment
         {
-            IsActive = request.IsActive,
-            Name = request.Name,
             Price = request.Price,
-            Type = request.Type
+            Date = request.Date,
+            Equipment = request.Equipment,
+            Timetable = request.Timetable,
+            Status = request.Status
         };
 
         _context.Equipment.Add(entity);
