@@ -22,10 +22,10 @@ public class GetReservationQueryHandler : IRequestHandler<GetReservationQuery, P
 
     async public Task<PaginatedList<ReservationDto>> Handle(GetReservationQuery request, CancellationToken cancellationToken)
     {
-        var eqList = await _context.Reservation
+        var reservationList = await _context.Reservation
             .ProjectTo<ReservationDto>(_mapper.ConfigurationProvider)
             .PaginatedListAsync(1,1000);
 
-        return eqList;
+        return reservationList;
     }
 }

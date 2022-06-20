@@ -22,10 +22,10 @@ public class GetTrainerQueryHandler : IRequestHandler<GetTrainerQuery, Paginated
 
     async public Task<PaginatedList<TrainerDto>> Handle(GetTrainerQuery request, CancellationToken cancellationToken)
     {
-        var eqList = await _context.Trainer
+        var trainerList = await _context.Trainer
             .ProjectTo<TrainerDto>(_mapper.ConfigurationProvider)
             .PaginatedListAsync(1,1000);
 
-        return eqList;
+        return trainerList;
     }
 }

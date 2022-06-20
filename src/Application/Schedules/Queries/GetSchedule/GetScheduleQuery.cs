@@ -22,10 +22,10 @@ public class GetScheduleQueryHandler : IRequestHandler<GetScheduleQuery, Paginat
 
     async public Task<PaginatedList<ScheduleDto>> Handle(GetScheduleQuery request, CancellationToken cancellationToken)
     {
-        var eqList = await _context.Schedule
+        var scheduleList = await _context.Schedule
             .ProjectTo<ScheduleDto>(_mapper.ConfigurationProvider)
             .PaginatedListAsync(1,1000);
 
-        return eqList;
+        return scheduleList;
     }
 }

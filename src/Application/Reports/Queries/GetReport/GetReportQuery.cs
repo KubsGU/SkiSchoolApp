@@ -22,10 +22,10 @@ public class GetReportQueryHandler : IRequestHandler<GetReportQuery, PaginatedLi
 
     async public Task<PaginatedList<ReportDto>> Handle(GetReportQuery request, CancellationToken cancellationToken)
     {
-        var eqList = await _context.Report
+        var reportList = await _context.Report
             .ProjectTo<ReportDto>(_mapper.ConfigurationProvider)
             .PaginatedListAsync(1,1000);
 
-        return eqList;
+        return reportList;
     }
 }

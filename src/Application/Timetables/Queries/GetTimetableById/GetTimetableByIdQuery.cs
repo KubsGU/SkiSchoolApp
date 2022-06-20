@@ -22,9 +22,9 @@ public class GetTimetableByIdQueryHandler : IRequestHandler<GetTimetableByIdQuer
 
     public async Task<TimetableDto> Handle(GetTimetableByIdQuery request, CancellationToken cancellationToken)
     {
-        var eq = await _context.Timetable.SingleAsync(eq => eq.Id == request.Id);
+        var timetable = await _context.Timetable.SingleAsync(timetable => timetable.Id == request.Id);
 
-        return _mapper.Map<TimetableDto>(eq);
+        return _mapper.Map<TimetableDto>(timetable);
 
     }
 }

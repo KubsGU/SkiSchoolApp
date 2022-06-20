@@ -22,9 +22,9 @@ public class GetScheduleByIdQueryHandler : IRequestHandler<GetScheduleByIdQuery,
 
     public async Task<ScheduleDto> Handle(GetScheduleByIdQuery request, CancellationToken cancellationToken)
     {
-        var eq = await _context.Schedule.SingleAsync(eq => eq.Id == request.Id);
+        var schedule = await _context.Schedule.SingleAsync(schedule => schedule.Id == request.Id);
 
-        return _mapper.Map<ScheduleDto>(eq);
+        return _mapper.Map<ScheduleDto>(schedule);
 
     }
 }

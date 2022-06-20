@@ -7,7 +7,7 @@ using MediatR;
 using SkiSchool.Application.Common.Interfaces;
 using SkiSchool.Domain.Entities;
 
-namespace SkiSchool.Application.Equipments.Commands.CreateEquipment;
+namespace SkiSchool.Application.Payments.Commands.CreatePayment;
 public class CreatePaymentCommand : IRequest<int>
 
 {
@@ -29,7 +29,7 @@ public class CreatePaymentCommandHandler : IRequestHandler<CreatePaymentCommand,
 
     public async Task<int> Handle(CreatePaymentCommand request, CancellationToken cancellationToken)
     {
-        var entity = new Equipment
+        var entity = new Payment
         {
             Price = request.Price,
             Date = request.Date,
@@ -38,7 +38,7 @@ public class CreatePaymentCommandHandler : IRequestHandler<CreatePaymentCommand,
             Status = request.Status
         };
 
-        _context.Equipment.Add(entity);
+        _context.Payment.Add(entity);
 
         await _context.SaveChangesAsync(cancellationToken);
 

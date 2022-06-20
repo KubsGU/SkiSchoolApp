@@ -22,9 +22,9 @@ public class GetClientByIdQueryHandler : IRequestHandler<GetClientByIdQuery, Cli
 
     public async Task<ClientDto> Handle(GetClientByIdQuery request, CancellationToken cancellationToken)
     {
-        var eq = await _context.Client.SingleAsync(eq => eq.Id == request.Id);
+        var client = await _context.Client.SingleAsync(client => client.Id == request.Id);
 
-        return _mapper.Map<ClientDto>(eq);
+        return _mapper.Map<ClientDto>(client);
 
     }
 }

@@ -22,10 +22,10 @@ public class GetPaymentQueryHandler : IRequestHandler<GetPaymentQuery, Paginated
 
     async public Task<PaginatedList<PaymentDto>> Handle(GetPaymentQuery request, CancellationToken cancellationToken)
     {
-        var eqList = await _context.Payment
+        var paymentList = await _context.Payment
             .ProjectTo<PaymentDto>(_mapper.ConfigurationProvider)
             .PaginatedListAsync(1, 1000);
 
-        return eqList;
+        return paymentList;
     }
 }

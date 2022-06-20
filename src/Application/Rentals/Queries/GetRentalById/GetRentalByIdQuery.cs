@@ -22,9 +22,9 @@ public class GetRentalByIdQueryHandler : IRequestHandler<GetRentalByIdQuery, Ren
 
     public async Task<RentalDto> Handle(GetRentalByIdQuery request, CancellationToken cancellationToken)
     {
-        var eq = await _context.Rental.SingleAsync(eq => eq.Id == request.Id);
+        var rental = await _context.Rental.SingleAsync(rental => rental.Id == request.Id);
 
-        return _mapper.Map<RentalDto>(eq);
+        return _mapper.Map<RentalDto>(rental);
 
     }
 }

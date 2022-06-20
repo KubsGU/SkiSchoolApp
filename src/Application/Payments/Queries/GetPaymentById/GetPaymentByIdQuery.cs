@@ -22,9 +22,9 @@ public class GetPaymentByIdQueryHandler : IRequestHandler<GetPaymentByIdQuery, P
 
     public async Task<PaymentDto> Handle(GetPaymentByIdQuery request, CancellationToken cancellationToken)
     {
-        var eq = await _context.Payment.SingleAsync(eq => eq.Id == request.Id);
+        var payment = await _context.Payment.SingleAsync(payment => payment.Id == request.Id);
 
-        return _mapper.Map<PaymentDto>(eq);
+        return _mapper.Map<PaymentDto>(payment);
 
     }
 }

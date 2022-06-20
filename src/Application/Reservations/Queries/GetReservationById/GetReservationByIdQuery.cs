@@ -22,9 +22,9 @@ public class GetReservationByIdQueryHandler : IRequestHandler<GetReservationById
 
     public async Task<ReservationDto> Handle(GetReservationByIdQuery request, CancellationToken cancellationToken)
     {
-        var eq = await _context.Reservation.SingleAsync(eq => eq.Id == request.Id);
+        var reservation = await _context.Reservation.SingleAsync(reservation => reservation.Id == request.Id);
 
-        return _mapper.Map<ReservationDto>(eq);
+        return _mapper.Map<ReservationDto>(reservation);
 
     }
 }

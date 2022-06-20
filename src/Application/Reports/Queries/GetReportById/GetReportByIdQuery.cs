@@ -22,9 +22,9 @@ public class GetReportByIdQueryHandler : IRequestHandler<GetReportByIdQuery, Rep
 
     public async Task<ReportDto> Handle(GetReportByIdQuery request, CancellationToken cancellationToken)
     {
-        var eq = await _context.Report.SingleAsync(eq => eq.Id == request.Id);
+        var report = await _context.Report.SingleAsync(report => report.Id == request.Id);
 
-        return _mapper.Map<ReportDto>(eq);
+        return _mapper.Map<ReportDto>(report);
 
     }
 }

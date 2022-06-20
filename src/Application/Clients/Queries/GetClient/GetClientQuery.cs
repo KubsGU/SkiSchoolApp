@@ -22,10 +22,10 @@ public class GetClientQueryHandler : IRequestHandler<GetClientQuery, PaginatedLi
 
     async public Task<PaginatedList<ClientDto>> Handle(GetClientQuery request, CancellationToken cancellationToken)
     {
-        var eqList = await _context.Client
+        var clientList = await _context.Client
             .ProjectTo<ClientDto>(_mapper.ConfigurationProvider)
             .PaginatedListAsync(1, 1000);
 
-        return eqList;
+        return clientList;
     }
 }

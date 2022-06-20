@@ -22,9 +22,9 @@ public class GetTrainerByIdQueryHandler : IRequestHandler<GetTrainerByIdQuery, T
 
     public async Task<TrainerDto> Handle(GetTrainerByIdQuery request, CancellationToken cancellationToken)
     {
-        var eq = await _context.Trainer.SingleAsync(eq => eq.Id == request.Id);
+        var trainer = await _context.Trainer.SingleAsync(trainer => trainer.Id == request.Id);
 
-        return _mapper.Map<TrainerDto>(eq);
+        return _mapper.Map<TrainerDto>(trainer);
 
     }
 }
