@@ -8,7 +8,7 @@ using SkiSchool.Application.Common.Interfaces;
 using SkiSchool.Domain.Entities;
 
 namespace SkiSchool.Application.Equipments.Commands.CreateEquipment;
-public class CreateEqupimentCommand : IRequest<int>
+public class CreateEquipmentCommand : IRequest<int>
 
 {
     public string Name { get; set; }
@@ -17,16 +17,16 @@ public class CreateEqupimentCommand : IRequest<int>
     public bool IsActive { get; set; }
 }
 
-public class CreateEqupimentCommandHandler : IRequestHandler<CreateEqupimentCommand, int>
+public class CreateEquipmentCommandHandler : IRequestHandler<CreateEquipmentCommand, int>
 {
     private readonly IApplicationDbContext _context;
 
-    public CreateEqupimentCommandHandler(IApplicationDbContext context)
+    public CreateEquipmentCommandHandler(IApplicationDbContext context)
     {
         _context = context;
     }
 
-    public async Task<int> Handle(CreateEqupimentCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(CreateEquipmentCommand request, CancellationToken cancellationToken)
     {
         var entity = new Equipment
         {
