@@ -3,9 +3,8 @@ using SkiSchool.Application.Common.Models;
 using SkiSchool.Application.Reports.Commands.CreateReport;
 using SkiSchool.Application.Reports.Commands.DeleteReport;
 using SkiSchool.Application.Reports.Queries;
-using SkiSchool.Application.Reports.Queries.GetReports;
 using SkiSchool.Application.Reports.Queries.GetReportById;
-
+using SkiSchool.Application.Reports.Queries.GetReport;
 
 namespace SkiSchool.WebUI.Controllers;
 

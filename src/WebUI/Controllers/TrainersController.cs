@@ -3,7 +3,7 @@ using SkiSchool.Application.Common.Models;
 using SkiSchool.Application.Trainers.Commands.CreateTrainer;
 using SkiSchool.Application.Trainers.Commands.DeleteTrainer;
 using SkiSchool.Application.Trainers.Queries;
-using SkiSchool.Application.Trainers.Queries.GetTrainers;
+using SkiSchool.Application.Trainers.Queries.GetTrainer;
 using SkiSchool.Application.Trainers.Queries.GetTrainerById;
 
 

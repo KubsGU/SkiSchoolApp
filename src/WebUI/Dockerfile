@@ -7,7 +7,7 @@ WORKDIR /app
 EXPOSE 5000
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
 RUN apt install -y nodejs
 WORKDIR /src
 COPY ["src/WebUI/WebUI.csproj", "src/WebUI/"]

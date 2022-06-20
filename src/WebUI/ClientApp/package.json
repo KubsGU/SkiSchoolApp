@@ -1,62 +1,51 @@
 {
-  "name": "skischool.webui",
-  "version": "0.0.0",
-  "scripts": {
-    "ng": "ng",
-    "start": "echo 'Starting...' && ng serve",
-    "start:dev": "echo 'Starting (Dev)...' && ng serve --host 0.0.0.0 --disable-host-check",
-    "build": "ng build",
-    "build:ssr": "ng run SkiSchool.WebUI:server:dev",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
-  },
+  "name": "ski-school",
+  "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@angular/animations": "12.0.1",
-    "@angular/common": "12.0.1",
-    "@angular/compiler": "12.0.1",
-    "@angular/core": "12.0.1",
-    "@angular/forms": "12.0.1",
-    "@angular/platform-browser": "12.0.1",
-    "@angular/platform-browser-dynamic": "12.0.1",
-    "@angular/platform-server": "12.0.1",
-    "@angular/router": "12.0.1",
-    "@fortawesome/angular-fontawesome": "^0.9.0",
-    "@fortawesome/fontawesome-svg-core": "1.2.30",
-    "@fortawesome/free-solid-svg-icons": "5.14.0",
-    "aspnet-prerendering": "^3.0.1",
-    "bootstrap": "^4.3.1",
-    "core-js": "^2.6.5",
-    "jquery": "3.5.0",
-    "ngx-bootstrap": "^5.2.0",
-    "oidc-client": "^1.9.0",
-    "popper.js": "^1.14.3",
-    "rxjs": "^6.5.4",
-    "tslib": "^2.0.0",
-    "zone.js": "~0.11.4"
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.1.1",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.0",
+    "@types/node": "^16.11.33",
+    "@types/react": "^18.0.8",
+    "@types/react-dom": "^18.0.3",
+    "@types/react-router-dom": "^5.3.3",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "5.0.1",
+    "sass": "^1.52.2",
+    "typescript": "^4.6.4",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^12.0.1",
-    "@angular/cli": "12.0.1",
-    "@angular/compiler-cli": "12.0.1",
-    "@angular/language-service": "12.0.1",
-    "@types/jasmine": "~3.6.0",
-    "@types/jasminewd2": "~2.0.6",
-    "@types/node": "^12.11.1",
-    "codelyzer": "^6.0.0",
-    "jasmine-core": "~3.6.0",
-    "jasmine-spec-reporter": "~5.0.0",
-    "karma": "~6.3.2",
-    "karma-chrome-launcher": "~3.1.0",
-    "karma-coverage-istanbul-reporter": "~3.0.2",
-    "karma-jasmine": "~4.0.0",
-    "karma-jasmine-html-reporter": "^1.5.0",
-    "typescript": "4.2.4"
-  },
-  "optionalDependencies": {
-    "protractor": "~7.0.0",
-    "ts-node": "~5.0.1",
-    "tslint": "~6.1.0"
+    "autoprefixer": "^10.4.7",
+    "postcss": "^8.4.13",
+    "tailwindcss": "^3.0.24"
   }
 }

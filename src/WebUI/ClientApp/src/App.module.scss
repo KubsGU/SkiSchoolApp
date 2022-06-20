@@ -1,0 +1,63 @@
+@import "./styles/base.scss";
+
+.app {
+ @apply flex justify-center items-center w-full p-6;
+
+ img {
+    box-shadow: 0px 0px 14px -4px rgba(66, 68, 90, 1);
+ }
+}
+
+.title {
+   @apply text-xl mb-6;
+ }
+ 
+.form {
+  @apply grid gap-4 w-4/6 content-center;
+  grid-template-columns: 10rem auto;
+
+  label {
+    @apply flex items-center text-lg;
+  }
+
+  input[type="checkbox"] {
+    @apply w-auto h-full;
+  }
+}
+
+.table {
+  @apply relative rounded-xl overflow-auto shadow-sm py-8;
+  @extend .bg-col-2;
+
+  table {
+    @apply border-collapse table-auto w-full text-sm;
+    thead {
+      tr {
+        th {
+          @apply border-b font-medium p-4 pl-8 pt-0 pb-3 text-white text-left
+        }
+      }
+    }
+    tbody {
+      @apply bg-white dark:bg-slate-800;
+      tr {
+        td {
+            @apply border-b border-slate-100 p-4 pl-8;
+            @extend .col-1
+        }
+      }
+    }
+  }
+}
+
+.add {
+  @apply mt-8 w-4/6 text-right self-end;
+}
+
+.selectContainer {
+  @apply flex flex-row justify-between  w-4/6 mb-10;
+
+  select {
+      @apply w-3/5;
+  }
+}

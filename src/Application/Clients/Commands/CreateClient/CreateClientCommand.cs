@@ -7,7 +7,7 @@ using MediatR;
 using SkiSchool.Application.Common.Interfaces;
 using SkiSchool.Domain.Entities;
 
-namespace SkiSchool.Application.Clients.Commands.CreateEquipment;
+namespace SkiSchool.Application.Clients.Commands.CreateClient;
 
 public class CreateClientCommand : IRequest<int>
 

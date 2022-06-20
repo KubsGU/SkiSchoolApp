@@ -3,7 +3,7 @@ using SkiSchool.Application.Common.Models;
 using SkiSchool.Application.Timetables.Commands.CreateTimetable;
 using SkiSchool.Application.Timetables.Commands.DeleteTimetable;
 using SkiSchool.Application.Timetables.Queries;
-using SkiSchool.Application.Timetables.Queries.GetTimetables;
+using SkiSchool.Application.Timetables.Queries.GetTimetable;
 using SkiSchool.Application.Timetables.Queries.GetTimetableById;
 
 

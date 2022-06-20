@@ -1,0 +1,42 @@
+@import "../../styles/base.scss";
+.logo {
+  @apply w-full flex justify-center mb-8;
+
+  img {
+    @apply w-2/4
+  }
+}
+
+.navbar {
+  @apply w-full h-screen p-6 pt-0;
+  @extend .col-w;
+  @extend .bg-col-1;
+}
+
+.title {
+  @apply text-lg cursor-pointer flex items-center;
+}
+
+.link__container {
+  @apply flex flex-col;
+
+  .link {
+    @apply ml-4 text-base
+  }
+}
+
+.link {
+  @apply block no-underline text-lg;
+}
+
+.activeLink {
+  @apply cursor-default pointer-events-none;
+  @extend .link;
+  @extend .col-3
+}
+
+.inactiveLink {
+  @apply cursor-pointer;
+  @extend .link;
+  @extend .col-w
+}

@@ -6,7 +6,7 @@ using SkiSchool.Application.Common.Mappings;
 using SkiSchool.Application.Common.Models;
 
 namespace SkiSchool.Application.Clients.Queries.GetClient;
-public class GetClientQuery : IRequest<PaginatedList<ClienttDto>>
+public class GetClientQuery : IRequest<PaginatedList<ClientDto>>
 { }
 public class GetClientQueryHandler : IRequestHandler<GetClientQuery, PaginatedList<ClientDto>>
 {

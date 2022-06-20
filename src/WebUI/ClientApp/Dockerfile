@@ -1,8 +1,7 @@
-FROM node:12
-EXPOSE 4200
+FROM node:16
+EXPOSE 3000
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
 COPY . .
-RUN npm build
-ENTRYPOINT ["npm", "run", "start:dev"]
+ENTRYPOINT ["npm", "run", "start"]

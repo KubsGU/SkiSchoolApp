@@ -3,9 +3,8 @@ using SkiSchool.Application.Common.Models;
 using SkiSchool.Application.Payments.Commands.CreatePayment;
 using SkiSchool.Application.Payments.Commands.DeletePayment;
 using SkiSchool.Application.Payments.Queries;
-using SkiSchool.Application.Payments.Queries.GetPayments;
 using SkiSchool.Application.Payments.Queries.GetPaymentById;
-
+using SkiSchool.Application.Payments.Queries.GetPayment;
 
 namespace SkiSchool.WebUI.Controllers;
 

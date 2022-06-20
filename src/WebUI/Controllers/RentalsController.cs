@@ -3,9 +3,8 @@ using SkiSchool.Application.Common.Models;
 using SkiSchool.Application.Rentals.Commands.CreateRental;
 using SkiSchool.Application.Rentals.Commands.DeleteRental;
 using SkiSchool.Application.Rentals.Queries;
-using SkiSchool.Application.Rentals.Queries.GetRentals;
 using SkiSchool.Application.Rentals.Queries.GetRentalById;
-
+using SkiSchool.Application.Rentals.Queries.GetRental;
 
 namespace SkiSchool.WebUI.Controllers;
 

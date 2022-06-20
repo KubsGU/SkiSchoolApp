@@ -43,7 +43,7 @@ public class EquipmentsController : ApiControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<int>> Create(CreateEqupimentCommand command)
+    public async Task<ActionResult<int>> Create(CreateEquipmentCommand command)
     {
         return await Mediator.Send(command);
     }

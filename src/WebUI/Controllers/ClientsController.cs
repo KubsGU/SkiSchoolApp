@@ -1,11 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using SkiSchool.Application.Common.Models;
-using SkiSchool.Application.Clients.Commands.CreateClient;
 using SkiSchool.Application.Clients.Commands.DeleteClient;
 using SkiSchool.Application.Clients.Queries;
-using SkiSchool.Application.Clients.Queries.GetClients;
 using SkiSchool.Application.Clients.Queries.GetClientById;
-
+using SkiSchool.Application.Clients.Queries.GetClient;
+using SkiSchool.Application.Clients.Commands.CreateClient;
 
 namespace SkiSchool.WebUI.Controllers;
 
@@ -13,7 +12,7 @@ public class ClientsController : ApiControllerBase
 {
 
     [HttpGet]
-    public async Task<ActionResult<PaginatedList<ClientDto>>> GetClients([FromQuery] GetCLientQuery query)
+    public async Task<ActionResult<PaginatedList<ClientDto>>> GetClients([FromQuery] GetClientQuery query)
     {
         return await Mediator.Send(query);
     }
