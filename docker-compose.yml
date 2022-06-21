@@ -21,7 +21,8 @@ services:
     restart: on-failure
 
   db:
-    image: "mcr.microsoft.com/mssql/server"
+    image: "mcr.microsoft.com/azure-sql-edge:latest"
     environment:
-      - "SA_PASSWORD=Your_password123"
+      - "MSSQL_SA_PASSWORD=Your_password123"
       - "ACCEPT_EULA=Y"
+      - "MSSQL_PID=Developer"
