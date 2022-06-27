@@ -11,6 +11,10 @@
 .title {
    @apply text-xl mb-6;
  }
+
+ .select {
+  @apply mb-10 w-2/5;
+ }
  
 .form {
   @apply grid gap-4 w-4/6 content-center;

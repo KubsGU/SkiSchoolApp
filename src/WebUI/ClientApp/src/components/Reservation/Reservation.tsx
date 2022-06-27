@@ -1,6 +1,6 @@
 import { EquipmentList } from "components/Equipment/DisplayEquipment";
 import { InstructorsList } from "components/Instructor/DisplayInstructor";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { FormElement, SelectOptions } from "types/types";
 import s from "./../../App.module.scss";
 
@@ -52,6 +52,25 @@ const Reservation = () => {
     ReservationForm
   );
 
+  const [equipmentsTypes, setEquipmentsTypes] = useState<string[]>();
+  const [equipmentsType, setEquipmentsType] = useState<string>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetch(
+          `${process.env.REACT_APP_IP}/Equipments/types`
+        );
+        const res = await data.json();
+        setEquipmentsTypes(res.items);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }, []);
+
+
   const handleData = (e: any) => {
     e.preventDefault();
     const body = {};
@@ -98,6 +117,20 @@ const Reservation = () => {
         <i className="material-icons" onClick={handleAddEqu}>
           add
         </i>
+        <label>Typ sprzetu</label>
+        <select
+          onChange={(e) => setEquipmentsType(e.target.value)}
+        >
+          {equipmentsTypes &&
+            equipmentsTypes.map((e, i) => {
+              return (
+                <option key={i} value={e}>
+                  {e}
+                </option>
+              );
+            })}
+        </select>
+
       </form>
       <div className={s.add}>
         <button type="submit" form="form">
