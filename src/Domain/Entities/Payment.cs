@@ -10,7 +10,7 @@ public class Payment
     public int Id { get; set; }
     public decimal Price { get;set; }
     public DateTime Date { get; set; }
-    public Equipment Equipment { get; set; }
-    public Timetable Timetable { get; set; } 
+    public Rental? Rental { get; set; }
+    public Timetable? Timetable { get; set; } 
     public bool Status { get; set; }
 }

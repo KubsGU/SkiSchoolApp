@@ -3,5 +3,7 @@
     public interface IDateTime
     {
         DateTime Now { get; }
+        DateTime Yesterday { get; }
+        DateTime Today { get; }
     }
 }

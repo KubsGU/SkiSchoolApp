@@ -26,8 +26,8 @@ public class DeleteTrainerCommandHandler : IRequestHandler<DeleteTrainerCommand>
         {
             throw new NotFoundException(nameof(Trainer), request.Id);
         }
-
-        _context.Trainer.Remove(entity);
+        //soft Deletion!
+        entity.IsActive = false;
 
         await _context.SaveChangesAsync(cancellationToken);
 

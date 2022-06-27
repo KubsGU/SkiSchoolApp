@@ -13,8 +13,8 @@ public class CreatePaymentCommand : IRequest<int>
 {
     public decimal Price { get; set; }
     public DateTime Date { get; set; }
-    public Equipment Equipment { get; set; }
-    public Timetable Timetable { get; set; }
+    public Rental? Rental { get; set; }
+    public Timetable? Timetable { get; set; }
     public bool Status { get; set; }
 }
 
@@ -29,11 +29,12 @@ public class CreatePaymentCommandHandler : IRequestHandler<CreatePaymentCommand,
 
     public async Task<int> Handle(CreatePaymentCommand request, CancellationToken cancellationToken)
     {
+
         var entity = new Payment
         {
             Price = request.Price,
             Date = request.Date,
-            Equipment = request.Equipment,
+            Rental = request.Rental,
             Timetable = request.Timetable,
             Status = request.Status
         };

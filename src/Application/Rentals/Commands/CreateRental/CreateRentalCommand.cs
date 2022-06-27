@@ -14,7 +14,7 @@ public class CreateRentalCommand : IRequest<int>
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public Client Client { get; set; }
-    public Equipment Equipment { get; set; }
+    public List<Reservation>? Reservations { get; set; }
     public bool IsCancelled { get; set; }
 }
 
@@ -34,10 +34,9 @@ public class CreateRentalCommandHandler : IRequestHandler<CreateRentalCommand, i
             StartDate = request.StartDate,
             EndDate = request.EndDate,
             Client = request.Client,
-            Equipment = request.Equipment,
             IsCancelled = request.IsCancelled
         };
-
+        //TODO FIX
         _context.Rental.Add(entity);
 
         await _context.SaveChangesAsync(cancellationToken);

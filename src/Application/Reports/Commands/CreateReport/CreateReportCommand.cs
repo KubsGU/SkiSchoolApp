@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using SkiSchool.Application.Common.Interfaces;
 using SkiSchool.Domain.Entities;
 
@@ -12,33 +10,40 @@ public class CreateReportCommand : IRequest<int>
 
 {
     public string Name { get; set; }
-    public string Type { get; set; }
-    public byte[] Data { get; set; }
 }
 
 public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, int>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IMapper _mapper;
+    private readonly ICsvFileBuilder _fileBuilder;
+    private readonly IDateTime _dateTime;
 
-    public CreateReportCommandHandler(IApplicationDbContext context)
+    public CreateReportCommandHandler(IApplicationDbContext context, IMapper mapper, ICsvFileBuilder fileBuilder, IDateTime dateTime)
     {
         _context = context;
+        _mapper = mapper;
+        _fileBuilder = fileBuilder;
+        _dateTime = dateTime;
     }
-
     public async Task<int> Handle(CreateReportCommand request, CancellationToken cancellationToken)
     {
-        var entity = new Report
+        //TODO improve
+        var records = await _context.Payment
+              .Where(p => p.Date >= _dateTime.Today && p.Timetable != null)
+              .ProjectTo<TimetableReportRecord>(_mapper.ConfigurationProvider)
+              .ToListAsync(cancellationToken);
+
+        var entity = new Report()
         {
-            Name = request.Name,
-            Type = request.Type,
-            Data = request.Data,
+            Name = request.Name + ".csv",
+            Type = "TimeTables",
+            Data = _fileBuilder.BuildPaymentFile(records)
         };
 
         _context.Report.Add(entity);
-
         await _context.SaveChangesAsync(cancellationToken);
-
-        return entity.Id;
+        return 0;
     }
 
 }
