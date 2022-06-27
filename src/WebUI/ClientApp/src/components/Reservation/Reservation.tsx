@@ -79,7 +79,7 @@ const Reservation = () => {
     setReservationForm(
       reservationForm.concat([
         {
-          name: "ID sprzetu " + equipmentsType,
+          name: "Sprzet typu " + equipmentsType,
           type: "number",
           id: "idEqu" + reservationForm.length,
           selectOptions: equipmentOptions,
