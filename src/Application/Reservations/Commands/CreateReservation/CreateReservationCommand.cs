@@ -11,8 +11,8 @@ namespace SkiSchool.Application.Reservations.Commands.CreateReservation;
 public class CreateReservationCommand : IRequest<int>
 
 {
-    public Rental Rental { get; set; }
-    public Equipment Equipment { get; set; }
+    public int RentalId { get; set; }
+    public int EquipmentId { get; set; }
 }
 
 public class CreateReservationCommandHandler : IRequestHandler<CreateReservationCommand, int>
@@ -26,10 +26,12 @@ public class CreateReservationCommandHandler : IRequestHandler<CreateReservation
 
     public async Task<int> Handle(CreateReservationCommand request, CancellationToken cancellationToken)
     {
+        var rental = await _context.Client.FindAsync(request.ClientId);
+        var equipment = await _context.Trainer.FindAsync(request.TrainerId);
         var entity = new Reservation
         {
-            Rental = request.Rental,
-            Equipment = request.Equipment,
+            Rental = rental,
+            Equipment = equipment,
         };
 
         _context.Reservation.Add(entity);

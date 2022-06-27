@@ -27,7 +27,8 @@ public class DeleteTimetableCommandHandler : IRequestHandler<DeleteTimetableComm
             throw new NotFoundException(nameof(Timetable), request.Id);
         }
 
-        _context.Timetable.Remove(entity);
+        //soft Deletion!
+        entity.IsCancelled = true;
 
         await _context.SaveChangesAsync(cancellationToken);
 

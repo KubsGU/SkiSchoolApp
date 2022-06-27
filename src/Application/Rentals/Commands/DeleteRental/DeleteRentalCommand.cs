@@ -27,7 +27,8 @@ public class DeleteRentalCommandHandler : IRequestHandler<DeleteRentalCommand>
             throw new NotFoundException(nameof(Rental), request.Id);
         }
 
-        _context.Rental.Remove(entity);
+        //soft Deletion!
+        entity.IsCancelled = true;
 
         await _context.SaveChangesAsync(cancellationToken);
 
