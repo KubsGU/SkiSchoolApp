@@ -15,10 +15,11 @@ services:
       - ~/.aspnet/https:/root/.aspnet/https:ro
       - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
     ports:
-      - "5000:5000"
+      - "5002:5002"
     depends_on:
       - db
     restart: on-failure
+
 
   db:
     image: "mcr.microsoft.com/azure-sql-edge:latest"

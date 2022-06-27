@@ -16,10 +16,10 @@ export const navbarElements: Navbar[] = [
         name: "Usuń",
         link: "instruktor/usun",
       },
-      {
-        name: "Edytuj",
-        link: "instruktor/edytuj",
-      },
+      // {
+      //   name: "Edytuj",
+      //   link: "instruktor/edytuj",
+      // },
       {
         name: "Godziny pracy",
         link: "instruktor/godziny-pracy",
@@ -41,10 +41,10 @@ export const navbarElements: Navbar[] = [
         name: "Usuń",
         link: "sprzet/usun",
       },
-      {
-        name: "Edytuj",
-        link: "sprzet/edytuj",
-      },
+      // {
+      //   name: "Edytuj",
+      //   link: "sprzet/edytuj",
+      // },
     ],
   },
   {
