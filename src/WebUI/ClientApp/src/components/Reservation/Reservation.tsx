@@ -5,21 +5,23 @@ import { FormElement, SelectOptions } from "types/types";
 import s from "./../../App.module.scss";
 
 //
-// TO DO 
+// TO DO
 // ogarnac dodawanie sprzetu wiecej niz jednego
 //
 
-export const instructorsOptions: SelectOptions[] = InstructorsList.map(inst => {
-  return {
-    id: inst.id,
-    label: inst.name + " " + inst.surname + ", " + inst.price + "zł"
-  };
-});
+export const instructorsOptions: SelectOptions[] = InstructorsList.map(
+  (inst) => {
+    return {
+      id: inst.id,
+      label: inst.name + " " + inst.surname + ", " + inst.price + "zł",
+    };
+  }
+);
 
-export const equipmentOptions: SelectOptions[] = EquipmentList.map(inst => {
+export const equipmentOptions: SelectOptions[] = EquipmentList.map((inst) => {
   return {
     id: inst.id,
-    label: inst.name + " " + inst.type + ", " + inst.price + "zł"
+    label: inst.name + " " + inst.type + ", " + inst.price + "zł",
   };
 });
 
@@ -39,12 +41,6 @@ export const ReservationForm: FormElement[] = [
     id: "idIns",
     selectOptions: instructorsOptions,
   },
-  {
-    name: "ID sprzetu (opcjonalne)",
-    type: "number",
-    id: "idEqu",
-    selectOptions: equipmentOptions,
-  },
 ];
 
 const Reservation = () => {
@@ -63,13 +59,13 @@ const Reservation = () => {
         );
         const res = await data.json();
         setEquipmentsTypes(res.items);
+        setEquipmentsType(res.items[0]);
       } catch (e) {
         console.log(e);
       }
     };
     fetchData();
   }, []);
-
 
   const handleData = (e: any) => {
     e.preventDefault();
@@ -79,58 +75,65 @@ const Reservation = () => {
 
   const handleAddEqu = (e: any) => {
     e.preventDefault();
-    reservationForm.push({
-      name: "ID sprzetu (opcjonalne)",
-      type: "number",
-      id: "idEqu" + reservationForm.length,
-      selectOptions: equipmentOptions,
-    });
-    setReservationForm(reservationForm);
+
+    setReservationForm(
+      reservationForm.concat([
+        {
+          name: "ID sprzetu " + equipmentsType,
+          type: "number",
+          id: "idEqu" + reservationForm.length,
+          selectOptions: equipmentOptions,
+        },
+      ])
+    );
   };
 
   return (
     <div>
       <p className={s.title}>Dokonaj rezerwacji</p>
-
       <form className={s.form} id="form" onSubmit={handleData}>
-        {reservationForm.map((el, i) => {
-          return (
-            <Fragment key={i}>
-              <label htmlFor={el.name}>{el.name}</label>
-              {el.selectOptions?.length ? (
-                <select id={el.id} name={el.name} multiple={el.multiselect}>
-                  {el.selectOptions.map((op, i) => {
-                    return (
-                      <option key={op.id} value={op.id}>
-                        {op.label}
-                      </option>
-                    );
-                  })}
-                </select>
-              ) : (
-                <input type={el.type} id={el.id} name={el.name}></input>
-              )}
-            </Fragment>
-          );
-        })}
-        <label>Dodaj więcej sprzętu</label>
-        <i className="material-icons" onClick={handleAddEqu}>
-          add
-        </i>
-        <label>Typ sprzetu</label>
-        <select
-          onChange={(e) => setEquipmentsType(e.target.value)}
-        >
-          {equipmentsTypes &&
-            equipmentsTypes.map((e, i) => {
-              return (
-                <option key={i} value={e}>
-                  {e}
-                </option>
-              );
-            })}
-        </select>
-
+        {reservationForm &&
+          reservationForm.map((el, i) => {
+            return (
+              <Fragment key={el.id}>
+                <label htmlFor={el.name}>{el.name}</label>
+                {el.selectOptions?.length ? (
+                  <select id={el.id} name={el.name} multiple={el.multiselect}>
+                    {el.selectOptions.map((op, i) => {
+                      return (
+                        <option key={op.id} value={op.id}>
+                          {op.label}
+                        </option>
+                      );
+                    })}
+                  </select>
+                ) : (
+                  <input type={el.type} id={el.id} name={el.name}></input>
+                )}
+              </Fragment>
+            );
+          })}
+        <label>Dodaj sprzęt danego typu</label>
+        <div className={s.addContainer}>
+          <select onChange={(e) => setEquipmentsType(e.target.value)}>
+            {equipmentsTypes &&
+              equipmentsTypes.map((e, i) => {
+                return (
+                  <option key={i} value={e}>
+                    {e}
+                  </option>
+                );
+              })}
+          </select>
+          <i
+            className={
+              (equipmentsType ? s.plus : s.plusDisable) + " material-icons"
+            }
+            onClick={handleAddEqu}
+          >
+            add
+          </i>
+        </div>
       </form>
       <div className={s.add}>
         <button type="submit" form="form">

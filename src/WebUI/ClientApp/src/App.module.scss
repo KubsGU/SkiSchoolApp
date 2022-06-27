@@ -55,7 +55,29 @@
 }
 
 .add {
-  @apply mt-8 w-4/6 text-right self-end;
+  @apply mt-8 w-4/6 text-right self-end cursor-pointer;
+}
+
+.addContainer {
+  @apply flex items-center;
+
+  i {
+    @apply h-min ml-3
+  }
+
+  select {
+    @apply h-full
+  }
+}
+
+.plus {
+  @apply cursor-pointer;
+  @extend .col-1;
+}
+
+.plusDisable {
+  @apply cursor-not-allowed pointer-events-none;
+  @extend .col-3;
 }
 
 .selectContainer {
