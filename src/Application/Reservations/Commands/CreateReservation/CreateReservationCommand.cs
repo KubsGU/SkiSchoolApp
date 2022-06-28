@@ -26,8 +26,8 @@ public class CreateReservationCommandHandler : IRequestHandler<CreateReservation
 
     public async Task<int> Handle(CreateReservationCommand request, CancellationToken cancellationToken)
     {
-        var rental = await _context.Client.FindAsync(request.ClientId);
-        var equipment = await _context.Trainer.FindAsync(request.TrainerId);
+        var rental = await _context.Rental.FindAsync(request.ClientId);
+        var equipment = await _context.Equipment.FindAsync(request.TrainerId);
         var entity = new Reservation
         {
             Rental = rental,

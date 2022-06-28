@@ -12,7 +12,7 @@ public class CreatePaymentCommand : IRequest<int>
 
 {
     public decimal Price { get; set; }
-    public int DateId { get; set; }
+    public DateTime Date { get; set; }
     public int RentalId { get; set; }
     public int TimetableId { get; set; }
     public bool Status { get; set; }
@@ -29,13 +29,12 @@ public class CreatePaymentCommandHandler : IRequestHandler<CreatePaymentCommand,
 
     public async Task<int> Handle(CreatePaymentCommand request, CancellationToken cancellationToken)
     {
-        var date = await _context.Client.FindAsync(request.DateId);
-        var rental = await _context.Trainer.FindAsync(request.RentalId);
-        var timetable = await _context.Trainer.FindAsync(request.TimetableId);
+        var rental = await _context.Rental.FindAsync(request.RentalId);
+        var timetable = await _context.Timetable.FindAsync(request.TimetableId);
         var entity = new Payment
         {
             Price = request.Price,
-            Date = date,
+            Date = request.Date,
             Rental = rental,
             Timetable = timetable,
             Status = request.Status
