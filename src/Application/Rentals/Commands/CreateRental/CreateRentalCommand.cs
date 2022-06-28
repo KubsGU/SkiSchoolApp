@@ -13,8 +13,8 @@ public class CreateRentalCommand : IRequest<int>
 {
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
-    public Client Client { get; set; }
-    public List<Reservation>? Reservations { get; set; }
+    public int ClientId { get; set; }
+    public List<int>? EquipmentId { get; set; }
     public bool IsCancelled { get; set; }
 }
 
@@ -29,11 +29,13 @@ public class CreateRentalCommandHandler : IRequestHandler<CreateRentalCommand, i
 
     public async Task<int> Handle(CreateRentalCommand request, CancellationToken cancellationToken)
     {
+        var client = await _context.Client.FindAsync(request.ClientId);
+        //TODO: HANDLE EQUIPMENTID
         var entity = new Rental
         {
             StartDate = request.StartDate,
             EndDate = request.EndDate,
-            Client = request.Client,
+            Client = client,
             IsCancelled = request.IsCancelled
         };
         //TODO FIX
