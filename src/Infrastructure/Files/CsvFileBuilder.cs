@@ -12,7 +12,7 @@ public class CsvFileBuilder : ICsvFileBuilder
     public byte[] BuildTimetableReportFile(IEnumerable<TimetableReportRecord> records)
     {
         using var memoryStream = new MemoryStream();
-        using (var streamWriter = new StreamWriter())
+        using (var streamWriter = new StreamWriter(memoryStream))
         {
             using var csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture);
 
