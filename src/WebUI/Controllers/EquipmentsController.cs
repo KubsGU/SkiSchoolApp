@@ -53,6 +53,8 @@ public class EquipmentsController : ApiControllerBase
     {
         await Mediator.Send(new DeleteEquipmentCommand { Id = id });
 
+        //Soft delete
+
         return NoContent();
     }
 

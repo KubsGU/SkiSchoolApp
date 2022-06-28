@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using SkiSchool.Application.Common.Interfaces;
 using SkiSchool.Domain.Entities;
 
@@ -13,8 +8,8 @@ public class CreateTimetableCommand : IRequest<int>
 {
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
-    public Trainer Trainer { get; set; }
-    public Client Client { get; set; }
+    public int TrainerId { get; set; }
+    public int ClientId { get; set; }
     public bool IsCancelled { get; set; }
 }
 
@@ -33,8 +28,8 @@ public class CreateTimetableCommandHandler : IRequestHandler<CreateTimetableComm
         {
             StartDate = request.StartDate,
             EndDate = request.EndDate,
-            Trainer = request.Trainer,
-            Client = request.Client,
+            TrainerId = request.TrainerId,
+            ClientId = request.ClientId,
             IsCancelled = request.IsCancelled
         };
 

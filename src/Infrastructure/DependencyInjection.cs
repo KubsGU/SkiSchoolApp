@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SkiSchool.Application.Common.Interfaces;
+using SkiSchool.Infrastructure.Files;
 using SkiSchool.Infrastructure.Persistence;
 using SkiSchool.Infrastructure.Services;
 
@@ -29,6 +28,7 @@ namespace SkiSchool.Infrastructure
             services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 
             services.AddTransient<IDateTime, DateTimeService>();
+            services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
 
             return services;
         }

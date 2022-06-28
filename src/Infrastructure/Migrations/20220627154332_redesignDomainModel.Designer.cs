@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SkiSchool.Infrastructure.Persistence;
 
@@ -11,9 +12,10 @@ using SkiSchool.Infrastructure.Persistence;
 namespace SkiSchool.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220627154332_redesignDomainModel")]
+    partial class redesignDomainModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -181,7 +183,7 @@ namespace SkiSchool.Infrastructure.Migrations
                     b.Property<int>("EquipmentId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RentalId")
+                    b.Property<int>("RentalId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -201,13 +203,15 @@ namespace SkiSchool.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("EndTime")
+                    b.Property<string>("DayOfWeek")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StartTime")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<TimeSpan>("EndTime")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("StartTime")
+                        .HasColumnType("time");
 
                     b.Property<int>("TrainerId")
                         .HasColumnType("int");
@@ -316,11 +320,15 @@ namespace SkiSchool.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SkiSchool.Domain.Entities.Rental", null)
+                    b.HasOne("SkiSchool.Domain.Entities.Rental", "Rental")
                         .WithMany("Reservations")
-                        .HasForeignKey("RentalId");
+                        .HasForeignKey("RentalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Equipment");
+
+                    b.Navigation("Rental");
                 });
 
             modelBuilder.Entity("SkiSchool.Domain.Entities.Schedule", b =>

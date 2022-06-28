@@ -13,4 +13,5 @@ public class Trainer
     public decimal Price { get; set; }
     public string TypeOfService { get; set; }
     public bool IsActive { get; set; }
+    public List<Timetable>? Timetables { get; set; }
 }

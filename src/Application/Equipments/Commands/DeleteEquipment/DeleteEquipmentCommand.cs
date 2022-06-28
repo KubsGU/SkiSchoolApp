@@ -27,7 +27,8 @@ public class DeleteEquipmentCommandHandler : IRequestHandler<DeleteEquipmentComm
             throw new NotFoundException(nameof(Equipment), request.Id);
         }
 
-        _context.Equipment.Remove(entity);
+        //soft Deletion!
+        entity.IsActive = false;
 
         await _context.SaveChangesAsync(cancellationToken);
 

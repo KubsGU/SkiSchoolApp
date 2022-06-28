@@ -13,8 +13,8 @@ public class CreatePaymentCommand : IRequest<int>
 {
     public decimal Price { get; set; }
     public DateTime Date { get; set; }
-    public Equipment Equipment { get; set; }
-    public Timetable Timetable { get; set; }
+    public int? RentalId { get; set; }
+    public int? TimetableId { get; set; }
     public bool Status { get; set; }
 }
 
@@ -33,8 +33,8 @@ public class CreatePaymentCommandHandler : IRequestHandler<CreatePaymentCommand,
         {
             Price = request.Price,
             Date = request.Date,
-            Equipment = request.Equipment,
-            Timetable = request.Timetable,
+            RentalId = request.RentalId,
+            TimetableId = request.TimetableId,
             Status = request.Status
         };
 
