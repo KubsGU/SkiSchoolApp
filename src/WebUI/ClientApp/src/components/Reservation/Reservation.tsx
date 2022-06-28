@@ -1,7 +1,7 @@
 import { EquipmentList } from "components/Equipment/DisplayEquipment";
 import { InstructorsList } from "components/Instructor/DisplayInstructor";
 import { Fragment, useEffect, useState } from "react";
-import { FormElement, SelectOptions } from "types/types";
+import { Client, FormElement, SelectOptions } from "types/types";
 import s from "./../../App.module.scss";
 
 //
@@ -25,13 +25,16 @@ export const equipmentOptions: SelectOptions[] = EquipmentList.map((inst) => {
   };
 });
 
-export const ReservationForm: FormElement[] = [
+export const CLientnForm: FormElement[] = [
   { name: "Imie", type: "text", id: "name" },
   { name: "Nazwisko", type: "text", id: "surname" },
-  { name: "Nr dowodu", type: "number", id: "idCardNumb" },
+  { name: "Nr dowodu", type: "number", id: "idNo" },
   { name: "Pesel", type: "number", id: "pesel" },
   { name: "E-Mail", type: "email", id: "email" },
-  { name: "Telefon", type: "tel", id: "tel" },
+  { name: "Telefon", type: "tel", id: "phoneNumber" },
+];
+
+export const ReservationForm: FormElement[] = [
   { name: "Data startu", type: "datetime-local", id: "startDate" },
   { name: "Data końca", type: "datetime-local", id: "endtDate" },
   { name: "Oplacone", type: "checkbox", id: "paid" },
@@ -47,7 +50,8 @@ const Reservation = () => {
   const [reservationForm, setReservationForm] = useState<FormElement[]>(
     ReservationForm
   );
-
+  const [existingClient, setExistingClient] = useState<boolean>();
+  const [currentlient, setCurrentClient] = useState<boolean>();
   const [equipmentsTypes, setEquipmentsTypes] = useState<string[]>();
   const [equipmentsType, setEquipmentsType] = useState<string>();
 
@@ -91,7 +95,30 @@ const Reservation = () => {
   return (
     <div>
       <p className={s.title}>Dokonaj rezerwacji</p>
-      <form className={s.form} id="form" onSubmit={handleData}>
+
+      <form className={s.form} id="form" onSubmit={handleData}>      
+      <label>Nowy klient</label>
+      <input type="checkbox" name="existingClient"  onChange={(e) => setExistingClient(e.target.checked)}/>
+        {existingClient && CLientnForm.map((el, i) => {
+          return (
+            <Fragment key={el.id}>
+              <label htmlFor={el.name}>{el.name}</label>
+              {el.selectOptions?.length ? (
+                <select id={el.id} name={el.name} multiple={el.multiselect}>
+                  {el.selectOptions.map((op, i) => {
+                    return (
+                      <option key={op.id} value={op.id}>
+                        {op.label}
+                      </option>
+                    );
+                  })}
+                </select>
+              ) : (
+                <input type={el.type} id={el.id} name={el.name}></input>
+              )}
+            </Fragment>
+          );
+        })}
         {reservationForm &&
           reservationForm.map((el, i) => {
             return (

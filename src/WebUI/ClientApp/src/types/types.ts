@@ -56,3 +56,12 @@ export type Equipments = {
   totalCount: number;
   totalPages: number;
 };
+
+export type Client = {
+  name: string;
+  surname: string;
+  email: string;
+  idNo: string;
+  pesel: string;
+  phoneNumber: string;
+};
