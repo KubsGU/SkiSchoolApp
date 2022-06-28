@@ -6,27 +6,27 @@ using SkiSchool.Application.Common.Interfaces;
 using SkiSchool.Domain.Entities;
 
 namespace SkiSchool.Application.Reports.Commands.CreateReport;
-public class CreateReportCommand : IRequest<int>
+public class CreateTimetableReportCommand : IRequest<int>
 
 {
     public string Name { get; set; }
 }
 
-public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, int>
+public class CreateTimetableReportCommandHandler : IRequestHandler<CreateTimetableReportCommand, int>
 {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
     private readonly ICsvFileBuilder _fileBuilder;
     private readonly IDateTime _dateTime;
 
-    public CreateReportCommandHandler(IApplicationDbContext context, IMapper mapper, ICsvFileBuilder fileBuilder, IDateTime dateTime)
+    public CreateTimetableReportCommandHandler(IApplicationDbContext context, IMapper mapper, ICsvFileBuilder fileBuilder, IDateTime dateTime)
     {
         _context = context;
         _mapper = mapper;
         _fileBuilder = fileBuilder;
         _dateTime = dateTime;
     }
-    public async Task<int> Handle(CreateReportCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(CreateTimetableReportCommand request, CancellationToken cancellationToken)
     {
         //TODO improve
         var records = await _context.Payment
@@ -38,7 +38,7 @@ public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, i
         {
             Name = request.Name + ".csv",
             Type = "TimeTables",
-            Data = _fileBuilder.BuildPaymentFile(records)
+            Data = _fileBuilder.BuildTimetableReportFile(records)
         };
 
         _context.Report.Add(entity);

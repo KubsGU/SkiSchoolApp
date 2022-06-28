@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using SkiSchool.Application.Common.Interfaces;
 using SkiSchool.Domain.Entities;
 
@@ -15,7 +10,7 @@ public class CreateRentalCommand : IRequest<int>
     public DateTime EndDate { get; set; }
     public int ClientId { get; set; }
     public List<int>? EquipmentId { get; set; }
-    public bool IsCancelled { get; set; }
+    public bool IsCancelled { get; set; } = false;
 }
 
 public class CreateRentalCommandHandler : IRequestHandler<CreateRentalCommand, int>
@@ -30,15 +25,16 @@ public class CreateRentalCommandHandler : IRequestHandler<CreateRentalCommand, i
     public async Task<int> Handle(CreateRentalCommand request, CancellationToken cancellationToken)
     {
         var client = await _context.Client.FindAsync(request.ClientId);
-        //TODO: HANDLE EQUIPMENTID
+
+        var listOfReservations = request.EquipmentId.Select(eq => new Reservation() { EquipmentId = eq }).ToList();
         var entity = new Rental
         {
             StartDate = request.StartDate,
             EndDate = request.EndDate,
-            Client = client,
+            ClientId = request.ClientId,
+            Reservations = listOfReservations,
             IsCancelled = request.IsCancelled
         };
-        //TODO FIX
         _context.Rental.Add(entity);
 
         await _context.SaveChangesAsync(cancellationToken);

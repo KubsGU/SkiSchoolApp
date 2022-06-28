@@ -24,15 +24,12 @@ public class CreateTimetableCommandHandler : IRequestHandler<CreateTimetableComm
 
     public async Task<int> Handle(CreateTimetableCommand request, CancellationToken cancellationToken)
     {
-        var client = await _context.Client.FindAsync(request.ClientId);
-        var trainer = await _context.Trainer.FindAsync(request.TrainerId);
-
         var entity = new Timetable
         {
             StartDate = request.StartDate,
             EndDate = request.EndDate,
-            Trainer = trainer,
-            Client = client,
+            TrainerId = request.TrainerId,
+            ClientId = request.ClientId,
             IsCancelled = request.IsCancelled
         };
 

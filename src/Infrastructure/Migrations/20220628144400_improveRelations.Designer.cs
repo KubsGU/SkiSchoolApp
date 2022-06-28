@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SkiSchool.Infrastructure.Persistence;
 
@@ -11,9 +12,10 @@ using SkiSchool.Infrastructure.Persistence;
 namespace SkiSchool.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220628144400_improveRelations")]
+    partial class improveRelations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,13 +102,13 @@ namespace SkiSchool.Infrastructure.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("RentalId")
+                    b.Property<int>("RentalId")
                         .HasColumnType("int");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("TimetableId")
+                    b.Property<int>("TimetableId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -286,11 +288,15 @@ namespace SkiSchool.Infrastructure.Migrations
                 {
                     b.HasOne("SkiSchool.Domain.Entities.Rental", "Rental")
                         .WithMany()
-                        .HasForeignKey("RentalId");
+                        .HasForeignKey("RentalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SkiSchool.Domain.Entities.Timetable", "Timetable")
                         .WithMany()
-                        .HasForeignKey("TimetableId");
+                        .HasForeignKey("TimetableId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Rental");
 

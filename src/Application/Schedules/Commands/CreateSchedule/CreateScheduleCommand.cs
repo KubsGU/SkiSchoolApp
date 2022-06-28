@@ -12,8 +12,8 @@ public class CreateScheduleCommand : IRequest<int>
 
 {
     public string DayOfWeek { get; set; }
-    public TimeSpan StartTime { get; set; }
-    public TimeSpan EndTime { get; set; }
+    public string StartTime { get; set; }
+    public string EndTime { get; set; }
     public int TrainerId { get; set; }
 }
 
@@ -31,7 +31,6 @@ public class CreateScheduleCommandHandler : IRequestHandler<CreateScheduleComman
         var trainer = await _context.Trainer.FindAsync(request.TrainerId);
         var entity = new Schedule
         {
-            DayOfWeek = request.DayOfWeek,
             StartTime = request.StartTime,
             EndTime = request.EndTime,
             Trainer = trainer
