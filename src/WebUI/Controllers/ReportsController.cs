@@ -34,14 +34,14 @@ public class ReportsController : ApiControllerBase
         return Ok(report);
     }
 
- /*   [HttpGet]
-    [Route("download/{id}")]
-    public async Task<FileContentResult> DownloadReportById(int id)
+    [HttpGet]
+    [Route("downloadBlob/{id}")]
+    public async Task<FileContentResult> DownloadReportBlobById(int id)
     {
         var report = await Mediator.Send(new GetReportByIdQuery { Id = id });
 
-        return new FileContentResult(report.Data, "text/csv","xd");
-    }*/
+        return new FileContentResult(report.Data, "text/csv");
+    }
 
     [HttpPost]
     [Route("timetable")]
