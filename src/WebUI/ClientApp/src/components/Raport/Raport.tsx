@@ -2,28 +2,46 @@ import { useState } from "react";
 import { SelectOptions } from "types/types";
 import s from "./../../App.module.scss";
 
-const RaportOptions: SelectOptions[] = [
-  { id: 1, label: "Raport 1" },
-  { id: 2, label: "Raport 2" },
-  { id: 3, label: "Raport 3" },
+type ReportSelectOptions = SelectOptions & { type: string };
+
+const RaportOptions: ReportSelectOptions[] = [
+  { id: 1, type: "rental", label: "Raport dobowy (wypozyczenia)" },
+  { id: 2, type: "timetable", label: "Raport dobowy (instruktorzy)" },
 ];
 
 const Raport = () => {
   const [report, setReport] = useState<string>();
-  const [reportName, setReportName] = useState<string>();
+  const [reportId, setReportId] = useState<string>();
+  const [reportType, setReportType] = useState<string>(RaportOptions[0].type);
+
+  const generateReport = async (e: any) => {
+    try {
+      const data = await fetch(
+        `${process.env.REACT_APP_IP}/reports/${reportType}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name: "raport" }),
+        }
+      );
+      const res = await data.text();
+      console.log(res);
+      setReportId(res);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const handleDelete = async (e: any) => {
     e.preventDefault();
     try {
-      const data = await fetch(`${process.env.REACT_APP_IP}/reports/1`, {
-        headers: {
-          "content-type": "text/csv;charset=UTF-8",
-        },
-      });
-      const res = await data.json();
-      setReportName(res.name);
+      const data = await fetch(
+        `${process.env.REACT_APP_IP}/reports/downloadBlob/1`
+      );
+      const res = await data.text();
+      console.log(res);
       const objectURL = window.URL.createObjectURL(
-        new Blob([res.data], { type: "text/csv" })
+        new Blob([res], { type: "text/csv" })
       );
       setReport(objectURL);
     } catch (e) {
@@ -39,13 +57,17 @@ const Raport = () => {
         <select>
           {RaportOptions.map((op) => {
             return (
-              <option key={op.id} value={op.id}>
+              <option
+                key={op.id}
+                value={op.type}
+                onChange={() => setReportType(op.type)}
+              >
                 {op.label}
               </option>
             );
           })}
         </select>
-        <a href={report} download={reportName}>
+        <a href={report} download="test.csv">
           Pobierz
         </a>
 
@@ -53,7 +75,7 @@ const Raport = () => {
           type="submit"
           form="form"
           className="material-icons"
-          onClick={handleDelete}
+          onClick={generateReport}
         >
           download
         </button>
