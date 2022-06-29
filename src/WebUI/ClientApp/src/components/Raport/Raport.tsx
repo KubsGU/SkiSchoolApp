@@ -11,7 +11,6 @@ const RaportOptions: ReportSelectOptions[] = [
 
 const Raport = () => {
   const [report, setReport] = useState<string>();
-  const [reportId, setReportId] = useState<string>();
   const [reportType, setReportType] = useState<string>(RaportOptions[0].type);
 
   const generateReport = async (e: any) => {
@@ -25,21 +24,18 @@ const Raport = () => {
         }
       );
       const res = await data.text();
-      console.log(res);
-      setReportId(res);
+      await downloadReport(res);
     } catch (e) {
       console.log(e);
     }
   };
 
-  const handleDelete = async (e: any) => {
-    e.preventDefault();
+  const downloadReport = async (raportId: string) => {
     try {
       const data = await fetch(
-        `${process.env.REACT_APP_IP}/reports/downloadBlob/1`
+        `${process.env.REACT_APP_IP}/reports/downloadBlob/${raportId}`
       );
       const res = await data.text();
-      console.log(res);
       const objectURL = window.URL.createObjectURL(
         new Blob([res], { type: "text/csv" })
       );
@@ -54,31 +50,32 @@ const Raport = () => {
       <p className={s.title}>Generuj raport</p>
 
       <div className={s.selectContainer}>
-        <select>
+        <select
+          onChange={(e) => {
+            setReportType(e.target.value);
+          }}
+        >
           {RaportOptions.map((op) => {
             return (
-              <option
-                key={op.id}
-                value={op.type}
-                onChange={() => setReportType(op.type)}
-              >
+              <option key={op.id} value={op.type}>
                 {op.label}
               </option>
             );
           })}
         </select>
-        <a href={report} download="test.csv">
-          Pobierz
-        </a>
-
-        <button
-          type="submit"
-          form="form"
-          className="material-icons"
-          onClick={generateReport}
-        >
-          download
+        <button className="material-icons" onClick={generateReport}>
+          add_circle
         </button>
+
+        {report && (
+          <a
+            className="material-icons link-repo"
+            href={report}
+            download="test.csv"
+          >
+            download
+          </a>
+        )}
       </div>
     </div>
   );
