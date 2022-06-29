@@ -1,4 +1,5 @@
-import { Equipment } from "types/types";
+import { useEffect, useState } from "react";
+import { Equipment, Equipments } from "types/types";
 import s from "./../../App.module.scss";
 import { EquipmentForm } from "./AddEquipment";
 
@@ -11,6 +12,21 @@ export const EquipmentList: Equipment[] = [
 ];
 
 const DisplayEquipment = () => {
+  const [equipments, setEquipments] = useState<Equipments>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetch(`${process.env.REACT_APP_IP}/Equipments`);
+        const res = await data.json();
+        setEquipments(res);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <div>
       <p className={s.title}>Wszyscy instruktorzy</p>
@@ -25,15 +41,16 @@ const DisplayEquipment = () => {
             </tr>
           </thead>
           <tbody>
-            {EquipmentList.map((el, i) => {
-              return (
-                <tr key={i}>
-                  {Object.values(el).map((val, i) => (
-                    <td key={i}>{String(val)}</td>
-                  ))}
-                </tr>
-              );
-            })}
+            {equipments &&
+              equipments.items.map((el, i) => {
+                return (
+                  <tr key={i}>
+                    {Object.values(el).map((val, i) => (
+                      <td key={i}>{String(val)}</td>
+                    ))}
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
       </div>{" "}

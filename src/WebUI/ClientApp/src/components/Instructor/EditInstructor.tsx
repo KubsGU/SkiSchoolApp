@@ -1,7 +1,5 @@
-import { instructorsOptions } from "components/Reservation/Reservation";
-import { InstructorsList } from "./DisplayInstructor";
-import { useState } from "react";
-import { Instuctor } from "types/types";
+import { useEffect, useState } from "react";
+import { Instuctor, Trainers } from "types/types";
 import s from "./../../App.module.scss";
 
 const EditInstructor = () => {
@@ -10,50 +8,74 @@ const EditInstructor = () => {
   const [surname, setSurname] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
   const [service, setService] = useState<string>("");
-  const [workHours, setWorkHours] = useState<string>("");
+  const [instructors, setInstructors] = useState<Trainers>();
+  const [instructorId, setinstructorId] = useState<number | undefined>();
 
   const handleSelect = (e: any) => {
     e.preventDefault();
     setSelectedOption(
-      InstructorsList.find((el) => el.id === parseInt(e.target.value))
+      instructors &&
+        instructors.items.find((el) => el.id === parseInt(e.target.value))
     );
+    setinstructorId(+e.target.value);
   };
-  const handleSave = (e: any) => {
+  const handleSave = async (e: any) => {
     e.preventDefault();
     const body = {
       name,
       surname,
       price,
-      service,
-      workHours,
+      typeOfService: service,
     };
+
+    try {
+      const data = await fetch(`http://localhost:5002/api/Trainers`, {
+        method: "PUT",
+        body: JSON.stringify(body),
+      });
+      const res = await data.json();
+      console.log(res);
+    } catch (e) {
+      console.log(e);
+    }
 
     setName("");
     setPrice(0);
     setSurname("");
     setService("");
-    setWorkHours("");
   };
 
   const setInputValue = () => {
-    const { name, surname, price, service, workHours } =
-      selectedOption as Instuctor;
+    const { name, surname, price, typeOfService } = selectedOption as Instuctor;
+    console.log(selectedOption);
     setName(name);
     setPrice(price);
     setSurname(surname);
-    setService(service);
-    setWorkHours(workHours);
+    setService(typeOfService);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetch(`${process.env.REACT_APP_IP}/Trainers`);
+        const res = await data.json();
+        setInstructors(res);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <div>
       <p className={s.title}>Edytuj instruktora</p>
       <div className={s.selectContainer}>
         <select onChange={handleSelect}>
-          {instructorsOptions.map((op) => {
+          {instructors?.items.map((op) => {
             return (
               <option key={op.id} value={op.id}>
-                {op.label}
+                {`${op.name} ${op.surname}, ${op.price}zł`}
               </option>
             );
           })}
@@ -97,14 +119,6 @@ const EditInstructor = () => {
           name="Typ usługi"
           value={service}
           onChange={(e) => setService(e.target.value)}
-        ></input>
-        <label htmlFor="Godziny pracy">Godziny pracy</label>
-        <input
-          type="text"
-          id="workHours"
-          name="Godziny pracy"
-          value={workHours}
-          onChange={(e) => setWorkHours(e.target.value)}
         ></input>
       </form>
       <div className={s.add}>

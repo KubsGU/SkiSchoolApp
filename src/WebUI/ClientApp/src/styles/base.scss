@@ -38,7 +38,6 @@
   background-color: #ffffff;
 }
 
-
 input,
 select {
   @apply mt-1 block w-full px-3 py-2  border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
@@ -48,8 +47,9 @@ select {
   focus:invalid:border-pink-500 focus:invalid:ring-pink-500;
 }
 
-button {
-  @apply  px-5 py-2 text-sm leading-5 rounded-full font-semibold text-white border-none cursor-pointer;
+button,
+.link-repo {
+  @apply px-5 py-2 text-sm leading-5 rounded-full font-semibold text-white border-none cursor-pointer;
   @extend .bg-col-1;
 
   &:hover {
