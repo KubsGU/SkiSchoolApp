@@ -1,35 +1,40 @@
 import { EquipmentList } from "components/Equipment/DisplayEquipment";
 import { InstructorsList } from "components/Instructor/DisplayInstructor";
-import { Fragment, useState } from "react";
-import { FormElement, SelectOptions } from "types/types";
+import { Fragment, useEffect, useState } from "react";
+import { Client, FormElement, SelectOptions } from "types/types";
 import s from "./../../App.module.scss";
 
 //
-// TO DO 
+// TO DO
 // ogarnac dodawanie sprzetu wiecej niz jednego
 //
 
-export const instructorsOptions: SelectOptions[] = InstructorsList.map(inst => {
+export const instructorsOptions: SelectOptions[] = InstructorsList.map(
+  (inst) => {
+    return {
+      id: inst.id,
+      label: inst.name + " " + inst.surname + ", " + inst.price + "zł",
+    };
+  }
+);
+
+export const equipmentOptions: SelectOptions[] = EquipmentList.map((inst) => {
   return {
     id: inst.id,
-    label: inst.name + " " + inst.surname + ", " + inst.price + "zł"
+    label: inst.name + " " + inst.type + ", " + inst.price + "zł",
   };
 });
 
-export const equipmentOptions: SelectOptions[] = EquipmentList.map(inst => {
-  return {
-    id: inst.id,
-    label: inst.name + " " + inst.type + ", " + inst.price + "zł"
-  };
-});
-
-export const ReservationForm: FormElement[] = [
+export const CLientnForm: FormElement[] = [
   { name: "Imie", type: "text", id: "name" },
   { name: "Nazwisko", type: "text", id: "surname" },
-  { name: "Nr dowodu", type: "number", id: "idCardNumb" },
+  { name: "Nr dowodu", type: "number", id: "idNo" },
   { name: "Pesel", type: "number", id: "pesel" },
   { name: "E-Mail", type: "email", id: "email" },
-  { name: "Telefon", type: "tel", id: "tel" },
+  { name: "Telefon", type: "tel", id: "phoneNumber" },
+];
+
+export const ReservationForm: FormElement[] = [
   { name: "Data startu", type: "datetime-local", id: "startDate" },
   { name: "Data końca", type: "datetime-local", id: "endtDate" },
   { name: "Oplacone", type: "checkbox", id: "paid" },
@@ -39,18 +44,32 @@ export const ReservationForm: FormElement[] = [
     id: "idIns",
     selectOptions: instructorsOptions,
   },
-  {
-    name: "ID sprzetu (opcjonalne)",
-    type: "number",
-    id: "idEqu",
-    selectOptions: equipmentOptions,
-  },
 ];
 
 const Reservation = () => {
   const [reservationForm, setReservationForm] = useState<FormElement[]>(
     ReservationForm
   );
+  const [existingClient, setExistingClient] = useState<boolean>();
+  const [currentlient, setCurrentClient] = useState<boolean>();
+  const [equipmentsTypes, setEquipmentsTypes] = useState<string[]>();
+  const [equipmentsType, setEquipmentsType] = useState<string>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetch(
+          `${process.env.REACT_APP_IP}/Equipments/types`
+        );
+        const res = await data.json();
+        setEquipmentsTypes(res.items);
+        setEquipmentsType(res.items[0]);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }, []);
 
   const handleData = (e: any) => {
     e.preventDefault();
@@ -60,23 +79,29 @@ const Reservation = () => {
 
   const handleAddEqu = (e: any) => {
     e.preventDefault();
-    reservationForm.push({
-      name: "ID sprzetu (opcjonalne)",
-      type: "number",
-      id: "idEqu" + reservationForm.length,
-      selectOptions: equipmentOptions,
-    });
-    setReservationForm(reservationForm);
+
+    setReservationForm(
+      reservationForm.concat([
+        {
+          name: "Sprzet typu " + equipmentsType,
+          type: "number",
+          id: "idEqu" + reservationForm.length,
+          selectOptions: equipmentOptions,
+        },
+      ])
+    );
   };
 
   return (
     <div>
       <p className={s.title}>Dokonaj rezerwacji</p>
 
-      <form className={s.form} id="form" onSubmit={handleData}>
-        {reservationForm.map((el, i) => {
+      <form className={s.form} id="form" onSubmit={handleData}>      
+      <label>Nowy klient</label>
+      <input type="checkbox" name="existingClient"  onChange={(e) => setExistingClient(e.target.checked)}/>
+        {existingClient && CLientnForm.map((el, i) => {
           return (
-            <Fragment key={i}>
+            <Fragment key={el.id}>
               <label htmlFor={el.name}>{el.name}</label>
               {el.selectOptions?.length ? (
                 <select id={el.id} name={el.name} multiple={el.multiselect}>
@@ -94,10 +119,48 @@ const Reservation = () => {
             </Fragment>
           );
         })}
-        <label>Dodaj więcej sprzętu</label>
-        <i className="material-icons" onClick={handleAddEqu}>
-          add
-        </i>
+        {reservationForm &&
+          reservationForm.map((el, i) => {
+            return (
+              <Fragment key={el.id}>
+                <label htmlFor={el.name}>{el.name}</label>
+                {el.selectOptions?.length ? (
+                  <select id={el.id} name={el.name} multiple={el.multiselect}>
+                    {el.selectOptions.map((op, i) => {
+                      return (
+                        <option key={op.id} value={op.id}>
+                          {op.label}
+                        </option>
+                      );
+                    })}
+                  </select>
+                ) : (
+                  <input type={el.type} id={el.id} name={el.name}></input>
+                )}
+              </Fragment>
+            );
+          })}
+        <label>Dodaj sprzęt danego typu</label>
+        <div className={s.addContainer}>
+          <select onChange={(e) => setEquipmentsType(e.target.value)}>
+            {equipmentsTypes &&
+              equipmentsTypes.map((e, i) => {
+                return (
+                  <option key={i} value={e}>
+                    {e}
+                  </option>
+                );
+              })}
+          </select>
+          <i
+            className={
+              (equipmentsType ? s.plus : s.plusDisable) + " material-icons"
+            }
+            onClick={handleAddEqu}
+          >
+            add
+          </i>
+        </div>
       </form>
       <div className={s.add}>
         <button type="submit" form="form">
