@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SkiSchool.Infrastructure.Persistence;
 
@@ -11,9 +12,10 @@ using SkiSchool.Infrastructure.Persistence;
 namespace SkiSchool.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220629222129_fixTrainerTablev2")]
+    partial class fixTrainerTablev2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -277,7 +279,8 @@ namespace SkiSchool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ScheduleId");
+                    b.HasIndex("ScheduleId")
+                        .IsUnique();
 
                     b.ToTable("Trainer");
                 });
@@ -345,8 +348,8 @@ namespace SkiSchool.Infrastructure.Migrations
             modelBuilder.Entity("SkiSchool.Domain.Entities.Trainer", b =>
                 {
                     b.HasOne("SkiSchool.Domain.Entities.Schedule", "Schedule")
-                        .WithMany()
-                        .HasForeignKey("ScheduleId")
+                        .WithOne("Trainer")
+                        .HasForeignKey("SkiSchool.Domain.Entities.Trainer", "ScheduleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -356,6 +359,12 @@ namespace SkiSchool.Infrastructure.Migrations
             modelBuilder.Entity("SkiSchool.Domain.Entities.Rental", b =>
                 {
                     b.Navigation("Reservations");
+                });
+
+            modelBuilder.Entity("SkiSchool.Domain.Entities.Schedule", b =>
+                {
+                    b.Navigation("Trainer")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SkiSchool.Domain.Entities.Trainer", b =>
