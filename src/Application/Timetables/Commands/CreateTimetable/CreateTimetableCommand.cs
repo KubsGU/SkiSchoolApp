@@ -10,7 +10,7 @@ public class CreateTimetableCommand : IRequest<int>
     public DateTime EndDate { get; set; }
     public int TrainerId { get; set; }
     public int ClientId { get; set; }
-    public bool IsCancelled { get; set; }
+    public bool IsCancelled { get; set; } = false;
 }
 
 public class CreateTimetableCommandHandler : IRequestHandler<CreateTimetableCommand, int>

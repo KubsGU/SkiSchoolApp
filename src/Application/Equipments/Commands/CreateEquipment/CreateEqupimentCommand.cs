@@ -14,7 +14,7 @@ public class CreateEquipmentCommand : IRequest<int>
     public string Name { get; set; }
     public string Type { get; set; }
     public decimal Price { get; set; }
-    public bool IsActive { get; set; }
+    public bool IsActive { get; set; } = true;
 }
 
 public class CreateEquipmentCommandHandler : IRequestHandler<CreateEquipmentCommand, int>

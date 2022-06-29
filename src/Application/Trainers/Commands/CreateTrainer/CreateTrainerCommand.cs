@@ -12,7 +12,7 @@ public class CreateTrainerCommand : IRequest<int>
     public string TypeOfService { get; set; }
     public string StartTime { get; set; }
     public string EndTime { get; set; }
-    public bool IsActive { get; set; }
+    public bool IsActive { get; set; } = true;
 }
 
 public class CreateTrainerCommandHandler : IRequestHandler<CreateTrainerCommand, int>

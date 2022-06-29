@@ -15,7 +15,7 @@ public class EquipmentsController : ApiControllerBase
     //ToDo: add as filtering to default endpoint
     [HttpGet]
     [Route("byTypes")]
-    public async Task<ActionResult<PaginatedList<EquipmentDto>>> GetEquipmentsByType([FromQuery] GetEquipmentsByTypeQuery query)
+    public async Task<ActionResult<List<EquipmentDto>>> GetEquipmentsByType([FromQuery] GetEquipmentsByTypeQuery query)
     {
         return await Mediator.Send(query);
     }
