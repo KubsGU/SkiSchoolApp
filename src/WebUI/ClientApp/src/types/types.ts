@@ -11,7 +11,7 @@ interface Children {
 
 export type FormElement = {
   name: string;
-  type: "number" | "text" | "datetime-local" | "checkbox" | "email" | "tel";
+  type: "number" | "text" | "datetime-local" | "checkbox" | "email" | "tel"| "time";
   id: string;
   selectOptions?: SelectOptions[];
   multiselect?: boolean;

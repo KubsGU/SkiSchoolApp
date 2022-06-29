@@ -37,7 +37,7 @@ root.render(
             />
             <Route path="/instruktor/usun" element={<DeleteInstructor />} />
             {/* <Route path="/instruktor/edytuj" element={<EditInstructor />} /> */}
-            <Route path="/instruktor/godziny-pracy" element={<WorkHours />} />
+            {/* <Route path="/instruktor/godziny-pracy" element={<WorkHours />} /> */}
             <Route path="/sprzet/dodaj" element={<AddEquipment />} />
             <Route path="/sprzet/wyswietl" element={<DisplayEquipment />} />
             <Route path="/sprzet/usun" element={<DeleteEquipment />} />
@@ -45,10 +45,6 @@ root.render(
             <Route path="/rezerwacja/rezerwuj" element={<Reservation />} />
             <Route path="/rezerwacja/anuluj" element={<DeleteReservation />} />
             <Route path="/rezerwacja/oplac" element={<PayReservation />} />
-            <Route
-              path="/rezerwacja/wyszukaj"
-              element={<SearchReservation />}
-            />
             <Route path="/raport" element={<Raport />} />
             <Route
               path="*"
