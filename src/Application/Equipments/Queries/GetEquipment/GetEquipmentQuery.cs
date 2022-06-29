@@ -22,7 +22,7 @@ public class GetEquipmentQueryHandler : IRequestHandler<GetEquipmentQuery, Pagin
 
     async public Task<PaginatedList<EquipmentDto>> Handle(GetEquipmentQuery request, CancellationToken cancellationToken)
     {
-        var eqList = await _context.Equipment
+        var eqList = await _context.Equipment.Where(eq => eq.IsActive)
             .ProjectTo<EquipmentDto>(_mapper.ConfigurationProvider)
             .PaginatedListAsync(1,1000);
 

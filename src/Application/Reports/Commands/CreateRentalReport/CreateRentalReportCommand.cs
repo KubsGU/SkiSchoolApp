@@ -49,7 +49,7 @@ public class CreateRentalReportCommandHandler : IRequestHandler<CreateRentalRepo
 
         _context.Report.Add(entity);
         await _context.SaveChangesAsync(cancellationToken);
-        return 0;
+        return entity.Id;
     }
 
 }

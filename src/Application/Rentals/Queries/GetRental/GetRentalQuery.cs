@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using SkiSchool.Application.Common.Interfaces;
 using SkiSchool.Application.Common.Mappings;
 using SkiSchool.Application.Common.Models;
@@ -22,7 +23,7 @@ public class GetRentalQueryHandler : IRequestHandler<GetRentalQuery, PaginatedLi
 
     async public Task<PaginatedList<RentalDto>> Handle(GetRentalQuery request, CancellationToken cancellationToken)
     {
-        var rentalList = await _context.Rental
+        var rentalList = await _context.Rental.Include(r => r.Reservations).Where(r => !r.IsCancelled)
             .ProjectTo<RentalDto>(_mapper.ConfigurationProvider)
             .PaginatedListAsync(1,1000);
 

@@ -33,6 +33,10 @@ namespace SkiSchool.Infrastructure.Persistence
         {
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(builder);
+            builder.Entity<Trainer>()
+                .HasOne(a => a.Schedule)
+                .WithOne(b => b.Trainer)
+                .HasForeignKey<Schedule>(b => b.TrainerId);
         }
     }
 }
