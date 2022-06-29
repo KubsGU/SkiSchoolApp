@@ -10,6 +10,8 @@ public class CreateTrainerCommand : IRequest<int>
     public string Surname { get; set; }
     public decimal Price { get; set; }
     public string TypeOfService { get; set; }
+    public string StartTime { get; set; }
+    public string EndTime { get; set; }
     public bool IsActive { get; set; }
 }
 
@@ -30,7 +32,13 @@ public class CreateTrainerCommandHandler : IRequestHandler<CreateTrainerCommand,
             Name = request.Name,
             Price = request.Price,
             TypeOfService = request.TypeOfService,
-            IsActive = request.IsActive
+            IsActive = request.IsActive,
+            Schedule = new Schedule()
+            {
+                StartTime = request.StartTime,
+                EndTime = request.EndTime,
+            }
+            
         };
 
         _context.Trainer.Add(entity);

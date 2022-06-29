@@ -28,10 +28,10 @@ public class GetEquipmentsByTypeQueryHandler : IRequestHandler<GetEquipmentsByTy
     {
 
         //return null;
-        var notAvailableEqIds = _context.Rental.Where(r => r.EndDate > request.StartDate && r.StartDate < request.EndDate).Select(r => r.Reservations.Select(res => res.Equipment.Id)).ToList();
+        //var notAvailableEqIds = _context.Rental.Where(r => r.EndDate > request.StartDate && r.StartDate < request.EndDate).Select(r => r.Reservations.Select(res => res.Equipment.Id)).ToList();
 
         var availableEquipment = _context.Equipment
-            .Where(e => e.IsActive && e.Type.Equals(request.Type) && !notAvailableEqIds.Any(x => x.Contains(e.Id)))
+            //.Where(e => e.IsActive && e.Type.Equals(request.Type) && !notAvailableEqIds.Any(x => x.Contains(e.Id)))
             .ProjectTo<EquipmentDto>(_mapper.ConfigurationProvider)
             .PaginatedListAsync(1, 1000);
         return availableEquipment;

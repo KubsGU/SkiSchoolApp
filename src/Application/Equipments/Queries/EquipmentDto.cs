@@ -8,5 +8,6 @@ public class EquipmentDto :IMapFrom<Equipment>
     public string Name { get; set; }
     public decimal Price { get; set; }
     public bool IsActive { get; set; }
+    public string Type { get; set; }
 
 }

@@ -22,7 +22,7 @@ public class GetRentalQueryHandler : IRequestHandler<GetRentalQuery, PaginatedLi
 
     async public Task<PaginatedList<RentalDto>> Handle(GetRentalQuery request, CancellationToken cancellationToken)
     {
-        var rentalList = await _context.Rental
+        var rentalList = await _context.Rental.Where(r => !r.IsCancelled)
             .ProjectTo<RentalDto>(_mapper.ConfigurationProvider)
             .PaginatedListAsync(1,1000);
 

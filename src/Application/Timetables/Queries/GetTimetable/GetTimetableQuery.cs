@@ -22,7 +22,7 @@ public class GetTimetableQueryHandler : IRequestHandler<GetTimetableQuery, Pagin
 
     async public Task<PaginatedList<TimetableDto>> Handle(GetTimetableQuery request, CancellationToken cancellationToken)
     {
-        var timetableList = await _context.Timetable
+        var timetableList = await _context.Timetable.Where(t => !t.IsCancelled)
             .ProjectTo<TimetableDto>(_mapper.ConfigurationProvider)
             .PaginatedListAsync(1,1000);
 
