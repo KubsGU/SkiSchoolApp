@@ -43,7 +43,7 @@ const AddInstructor = () => {
           return (
             <Fragment key={i}>
               <label htmlFor={el.name}>{el.name}</label>
-              <input type={el.type} id={el.id} name={el.name}></input>
+              <input type={el.type} id={el.id} name={el.name}  required></input>
             </Fragment>
           );
         })}

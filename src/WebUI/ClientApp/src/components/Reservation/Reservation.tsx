@@ -3,6 +3,8 @@ import { InstructorsList } from "components/Instructor/DisplayInstructor";
 import { Fragment, useEffect, useState } from "react";
 import { Client, FormElement, SelectOptions } from "types/types";
 import s from "./../../App.module.scss";
+import ClientStep from "./ClientStep";
+import InstructorStep from "./InstructorStep";
 
 //
 // TO DO
@@ -51,9 +53,11 @@ const Reservation = () => {
     ReservationForm
   );
   const [existingClient, setExistingClient] = useState<boolean>();
-  const [currentlient, setCurrentClient] = useState<boolean>();
+  const [currentClient, setCurrentClient] = useState<number>();
+  const [currentInstructorRes, setCurrentInstructorRes] = useState<number | undefined>();
   const [equipmentsTypes, setEquipmentsTypes] = useState<string[]>();
   const [equipmentsType, setEquipmentsType] = useState<string>();
+  const [step, setStep] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -92,33 +96,24 @@ const Reservation = () => {
     );
   };
 
+  const steps = () => {
+    switch (step) {
+      case 0:
+        return ClientStep(setCurrentClient, setStep);
+        case 1:
+          return InstructorStep(currentClient, setCurrentInstructorRes, setStep);
+    }
+  };
+
   return (
     <div>
       <p className={s.title}>Dokonaj rezerwacji</p>
 
-      <form className={s.form} id="form" onSubmit={handleData}>      
+      {steps()}
+
+      {/* <form className={s.form} id="form" onSubmit={handleData}>      
       <label>Nowy klient</label>
       <input type="checkbox" name="existingClient"  onChange={(e) => setExistingClient(e.target.checked)}/>
-        {existingClient && CLientnForm.map((el, i) => {
-          return (
-            <Fragment key={el.id}>
-              <label htmlFor={el.name}>{el.name}</label>
-              {el.selectOptions?.length ? (
-                <select id={el.id} name={el.name} multiple={el.multiselect}>
-                  {el.selectOptions.map((op, i) => {
-                    return (
-                      <option key={op.id} value={op.id}>
-                        {op.label}
-                      </option>
-                    );
-                  })}
-                </select>
-              ) : (
-                <input type={el.type} id={el.id} name={el.name}></input>
-              )}
-            </Fragment>
-          );
-        })}
         {reservationForm &&
           reservationForm.map((el, i) => {
             return (
@@ -166,7 +161,7 @@ const Reservation = () => {
         <button type="submit" form="form">
           Dodaj
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };
