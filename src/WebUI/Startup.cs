@@ -91,7 +91,7 @@ namespace SkiSchool.WebUI
 
                 if (env.IsDevelopment())
                 {
-                spa.UseProxyToSpaDevelopmentServer(Configuration["SpaBaseUrl"] ?? "http://192.168.0.220:3000");
+                spa.UseProxyToSpaDevelopmentServer(Configuration["SpaBaseUrl"] ?? "http://192.168.0.171:3000");
                 }
             });
         }

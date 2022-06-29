@@ -4,6 +4,7 @@ import { Fragment, useEffect, useState } from "react";
 import { Client, FormElement, SelectOptions } from "types/types";
 import s from "./../../App.module.scss";
 import ClientStep from "./ClientStep";
+import EquipentStep from "./EquipemntStep";
 import InstructorStep from "./InstructorStep";
 
 //
@@ -49,11 +50,15 @@ export const ReservationForm: FormElement[] = [
 ];
 
 const Reservation = () => {
-  const [reservationForm, setReservationForm] =
-    useState<FormElement[]>(ReservationForm);
+  const [reservationForm, setReservationForm] = useState<FormElement[]>(
+    ReservationForm
+  );
   const [existingClient, setExistingClient] = useState<boolean>();
   const [currentClient, setCurrentClient] = useState<number | undefined>();
   const [currentInstructorRes, setCurrentInstructorRes] = useState<
+    number | undefined
+  >();
+  const [currentEquipemntrRes, setCurrentEquipemntrRes] = useState<
     number | undefined
   >();
   const [equipmentsTypes, setEquipmentsTypes] = useState<string[]>();
@@ -70,6 +75,10 @@ const Reservation = () => {
 
   const setInstructorRes = (res: number | undefined) => {
     setCurrentInstructorRes(res);
+  };
+
+  const setEquipmentRes = (res: number | undefined) => {
+    setCurrentEquipemntrRes(res);
   };
 
   useEffect(() => {
@@ -127,13 +136,19 @@ const Reservation = () => {
             setStep={setNewStep}
           />
         );
+      case 2:
+        return (
+          <EquipentStep
+            clientId={currentClient}
+            setEquipmentResId={setEquipmentRes}
+            setStep={setNewStep}
+          />
+        );
     }
   };
 
   return (
     <div>
-      <p className={s.title}>Dokonaj rezerwacji</p>
-
       {steps()}
 
       {/* <form className={s.form} id="form" onSubmit={handleData}>      
