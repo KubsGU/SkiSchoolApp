@@ -33,7 +33,6 @@ public class CreateScheduleCommandHandler : IRequestHandler<CreateScheduleComman
         {
             StartTime = request.StartTime,
             EndTime = request.EndTime,
-            Trainer = trainer
         };
 
         _context.Schedule.Add(entity);

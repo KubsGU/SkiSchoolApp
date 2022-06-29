@@ -27,7 +27,7 @@ public class GetEqupimentTypesQueryHandler : IRequestHandler<GetEqupimentTypesQu
 
     public async Task<PaginatedList<string>> Handle(GetEqupimentTypesQuery request, CancellationToken cancellationToken)
     {
-        var types = await _context.Equipment.Select(e => e.Type).Distinct().PaginatedListAsync(1, 100);
+        var types = await _context.Equipment.Where(eq => eq.IsActive).Select(e => e.Type).Distinct().PaginatedListAsync(1, 100);
         return types;
     }
 }
