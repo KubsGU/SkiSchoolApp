@@ -8,12 +8,10 @@ import Reservation from "components/Reservation/Reservation";
 import AddInstructor from "components/Instructor/AddInstructor";
 import DisplayInstructor from "components/Instructor/DisplayInstructor";
 import DeleteInstructor from "components/Instructor/DeleteInstructor";
-import EditInstructor from "components/Instructor/EditInstructor";
 import WorkHours from "components/Instructor/WorkHours";
 import AddEquipment from "components/Equipment/AddEquipment";
 import DisplayEquipment from "components/Equipment/DisplayEquipment";
 import DeleteEquipment from "components/Equipment/DeleteEquipment";
-import EditEquipment from "components/Equipment/EditEquipment";
 import DeleteReservation from "components/Reservation/DeleteReservation";
 import PayReservation from "components/Reservation/PayReservation";
 import SearchReservation from "components/Reservation/SearchReservation";
@@ -33,18 +31,24 @@ root.render(
           <Routes>
             <Route path="/" element={<App />} />
             <Route path="/instruktor/dodaj" element={<AddInstructor />} />
-            <Route path="/instruktor/wyswietl" element={<DisplayInstructor />} />
+            <Route
+              path="/instruktor/wyswietl"
+              element={<DisplayInstructor />}
+            />
             <Route path="/instruktor/usun" element={<DeleteInstructor />} />
-            <Route path="/instruktor/edytuj" element={<EditInstructor />} />
+            {/* <Route path="/instruktor/edytuj" element={<EditInstructor />} /> */}
             <Route path="/instruktor/godziny-pracy" element={<WorkHours />} />
             <Route path="/sprzet/dodaj" element={<AddEquipment />} />
             <Route path="/sprzet/wyswietl" element={<DisplayEquipment />} />
             <Route path="/sprzet/usun" element={<DeleteEquipment />} />
-            <Route path="/sprzet/edytuj" element={<EditEquipment />} />
+            {/* <Route path="/sprzet/edytuj" element={<EditEquipment />} /> */}
             <Route path="/rezerwacja/rezerwuj" element={<Reservation />} />
             <Route path="/rezerwacja/anuluj" element={<DeleteReservation />} />
             <Route path="/rezerwacja/oplac" element={<PayReservation />} />
-            <Route path="/rezerwacja/wyszukaj" element={<SearchReservation />} />
+            <Route
+              path="/rezerwacja/wyszukaj"
+              element={<SearchReservation />}
+            />
             <Route path="/raport" element={<Raport />} />
             <Route
               path="*"
