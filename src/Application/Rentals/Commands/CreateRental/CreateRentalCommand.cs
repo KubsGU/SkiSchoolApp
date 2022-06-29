@@ -10,7 +10,6 @@ public class CreateRentalCommand : IRequest<int>
     public DateTime EndDate { get; set; }
     public int ClientId { get; set; }
     public List<int>? EquipmentId { get; set; }
-    public bool IsCancelled { get; set; } = false;
 }
 
 public class CreateRentalCommandHandler : IRequestHandler<CreateRentalCommand, int>
@@ -33,7 +32,7 @@ public class CreateRentalCommandHandler : IRequestHandler<CreateRentalCommand, i
             EndDate = request.EndDate,
             ClientId = request.ClientId,
             Reservations = listOfReservations,
-            IsCancelled = request.IsCancelled
+            IsCancelled = false
         };
         _context.Rental.Add(entity);
 
