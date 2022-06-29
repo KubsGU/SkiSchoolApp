@@ -33,85 +33,88 @@ const InstructorStep: FC<{
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    setLoading(true);
-    const body = {
-      startDate: e.target.startDate.value,
-      endDate: e.target.endtDate.value,
-      trainerId: instructorId,
-      clientId: clientId,
-      isCancelled: false,
-    };
+    if (instructorId) {
+      setLoading(true);
+      const body = {
+        startDate: e.target.startDate.value,
+        endDate: e.target.endtDate.value,
+        trainerId: instructorId,
+        clientId: clientId,
+        isCancelled: false,
+      };
 
-    try {
-      const data = await fetch(`${process.env.REACT_APP_IP}/Timetables`, {
-        method: "POST",
-        mode: "cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      const res = data.json().then((e) => {
-        if (e) {
-          setInstructorResId(e);
-          setLoading(false);
-        }
-      });
-    } catch (e) {
-      console.log(e);
+      try {
+        const data = await fetch(`${process.env.REACT_APP_IP}/Timetables`, {
+          method: "POST",
+          mode: "cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+        const res = data.json().then((e) => {
+          if (e) {
+            setInstructorResId(e);
+            setLoading(false);
+            setStep(2);
+          }
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+        setStep(2);
     }
   };
   return (
-    <form className={s.form} id="instructorForm" onSubmit={handleSubmit}>
-      {form &&
-        form.map((el, i) => {
-          return (
-            <Fragment key={el.id}>
-              <label htmlFor={el.name}>{el.name}</label>
-              {el.selectOptions?.length ? (
-                <select
-                  id={el.id}
-                  name={el.name}
-                  multiple={el.multiselect}
-                  required
-                >
-                  {el.selectOptions.map((op, i) => {
-                    return (
-                      <option key={op.id} value={op.id}>
-                        {op.label}
-                      </option>
-                    );
-                  })}
-                </select>
-              ) : (
-                <input
-                  type={el.type}
-                  id={el.id}
-                  name={el.name}
-                  required
-                ></input>
-              )}
-            </Fragment>
-          );
-        })}
-      <label>Wybierz Instruktora</label>
-      <select onChange={(e) => setInstructorId(+e.target.value)}>
-        {instructors &&
-          instructors.items.map((e, i) => {
+    <Fragment>
+      <p className={s.title}>Wprowadz instruktora</p>
+      <form className={s.form} id="instructorForm" onSubmit={handleSubmit}>
+        {form &&
+          form.map((el, i) => {
             return (
-              <option key={i} value={e.id}>
-                {`${e.name} ${e.surname}, ${e.price}zł`}
-              </option>
+              <Fragment key={el.id}>
+                <label htmlFor={el.name}>{el.name}</label>
+                {el.selectOptions?.length ? (
+                  <select id={el.id} name={el.name} multiple={el.multiselect}>
+                    {el.selectOptions.map((op, i) => {
+                      return (
+                        <option key={op.id} value={op.id}>
+                          {op.label}
+                        </option>
+                      );
+                    })}
+                  </select>
+                ) : (
+                  <input type={el.type} id={el.id} name={el.name}></input>
+                )}
+              </Fragment>
             );
           })}
-      </select>
-      <div className={s.add}>
-        <button onClick={() => setStep(0)} form="instructorForm">
-          Powrót
-        </button>
-        <button type="submit" form="instructorForm">
-          Dalej
-        </button>
-      </div>
-    </form>
+        <label>Wybierz Instruktora</label>
+        <select onChange={(e) => setInstructorId(+e.target.value)}>
+          <option key={0} value={undefined}>
+            Instruktor
+          </option>
+          {instructors &&
+            instructors.items.map((e, i) => {
+              return (
+                <option key={i} value={e.id}>
+                  {`${e.name} ${e.surname}, ${e.price}zł`}
+                </option>
+              );
+            })}
+        </select>
+        <div className={s.add}>
+          <button onClick={() => setStep(0)} form="instructorForm">
+            Powrót
+          </button>
+        </div>
+        <div className={s.add}>
+          <button type="submit" form="instructorForm">
+            Dalej
+          </button>
+        </div>
+      </form>
+    </Fragment>
   );
 };
 

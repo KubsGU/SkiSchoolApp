@@ -3,9 +3,9 @@ import { FormElement } from "types/types";
 import s from "./../../App.module.scss";
 
 export const EquipmentForm: FormElement[] = [
-  { name: "Typ sprzetu", type: "text", id: "type" },
   { name: "Nazwa", type: "text", id: "name" },
   { name: "Cena", type: "number", id: "price" },
+  { name: "Typ sprzetu", type: "text", id: "type" },
 ];
 
 const AddEquipment = () => {
@@ -16,6 +16,7 @@ const AddEquipment = () => {
       type: e.target.type.value,
       name: e.target.name.value,
       price: +e.target.price.value,
+      isActive: true
     };
 
     console.log(body);

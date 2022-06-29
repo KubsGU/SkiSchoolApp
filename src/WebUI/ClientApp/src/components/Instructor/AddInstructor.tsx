@@ -7,6 +7,8 @@ export const InstructorForm: FormElement[] = [
   { name: "Nazwisko", type: "text", id: "surname" },
   { name: "Cena", type: "number", id: "price" },
   { name: "Typ usługi", type: "text", id: "service" },
+  { name: "Godzina startu pracy", type: "time", id: "startTime" },
+  { name: "Godzina startu pracy", type: "time", id: "endTime" },
 ];
 
 const AddInstructor = () => {
@@ -18,6 +20,9 @@ const AddInstructor = () => {
       surname: e.target.surname.value,
       price: e.target.price.value,
       typeOfService: e.target.service.value,
+      startTime: e.target.startTime.value,
+      endTime: e.target.endTime.value,
+      isActive: true,
     };
 
     try {

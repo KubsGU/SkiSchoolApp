@@ -4,12 +4,7 @@ services:
   webui:
     environment:
       - "ASPNETCORE_ENVIRONMENT=Development"
-<<<<<<< HEAD
       - "SpaBaseUrl=http://192.168.0.220:3000"
-      
-=======
-      - "SpaBaseUrl=http://clientapp:3000"
->>>>>>> master
 
   clientapp:
     image: ${DOCKER_REGISTRY-}clientapp

@@ -79,6 +79,8 @@ const ClientStep: FC<{
     }
   };
   return (
+    <Fragment>
+    <p className={s.title}>Wprowadz klienta</p>
     <form className={s.form} id="clientForm" onSubmit={handleSubmit}>
       <label>Nowy klient</label>
       <input type="checkbox" name="newClient" onChange={handleCheckbox} />
@@ -136,7 +138,7 @@ const ClientStep: FC<{
           Dalej
         </button>
       </div>
-    </form>
+    </form></Fragment>
   );
 };
 
