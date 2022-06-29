@@ -43,7 +43,7 @@ public class CreateTimetableReportCommandHandler : IRequestHandler<CreateTimetab
 
         _context.Report.Add(entity);
         await _context.SaveChangesAsync(cancellationToken);
-        return 0;
+        return entity.Id;
     }
 
 }
