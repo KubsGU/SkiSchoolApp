@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using SkiSchool.Application.Reports.Commands.CreateRentalReport;
 using SkiSchool.Application.Reports.Commands.CreateReport;
+using SkiSchool.Application.Trainers.Queries;
 using SkiSchool.Domain.Entities;
 using System.Reflection;
 
@@ -26,6 +27,10 @@ namespace SkiSchool.Application.Common.Mappings
                .ForMember(dest => dest.Equipment, opt => opt.MapFrom(src => src.Rental.Reservations.Select(r => r.Equipment)))
                .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.Rental.StartDate))
                .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.Rental.EndDate));
+
+            CreateMap<Trainer, TrainerDto>()
+                .ForMember(dest => dest.StartTime, opt => opt.MapFrom(src => src.Schedule.StartTime))
+                .ForMember(dest => dest.EndTime, opt => opt.MapFrom(src => src.Schedule.EndTime));
         }
 
         private void ApplyMappingsFromAssembly(Assembly assembly)
