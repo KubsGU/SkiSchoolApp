@@ -49,15 +49,28 @@ export const ReservationForm: FormElement[] = [
 ];
 
 const Reservation = () => {
-  const [reservationForm, setReservationForm] = useState<FormElement[]>(
-    ReservationForm
-  );
+  const [reservationForm, setReservationForm] =
+    useState<FormElement[]>(ReservationForm);
   const [existingClient, setExistingClient] = useState<boolean>();
-  const [currentClient, setCurrentClient] = useState<number>();
-  const [currentInstructorRes, setCurrentInstructorRes] = useState<number | undefined>();
+  const [currentClient, setCurrentClient] = useState<number | undefined>();
+  const [currentInstructorRes, setCurrentInstructorRes] = useState<
+    number | undefined
+  >();
   const [equipmentsTypes, setEquipmentsTypes] = useState<string[]>();
   const [equipmentsType, setEquipmentsType] = useState<string>();
   const [step, setStep] = useState(0);
+
+  const setClient = (clientId: number | undefined) => {
+    setCurrentClient(clientId);
+  };
+
+  const setNewStep = (step: number) => {
+    setStep(step);
+  };
+
+  const setInstructorRes = (res: number | undefined) => {
+    setCurrentInstructorRes(res);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -99,9 +112,21 @@ const Reservation = () => {
   const steps = () => {
     switch (step) {
       case 0:
-        return ClientStep(setCurrentClient, setStep);
-        case 1:
-          return InstructorStep(currentClient, setCurrentInstructorRes, setStep);
+        return (
+          <ClientStep
+            setClientId={setClient}
+            setStep={setNewStep}
+            currentClient={currentClient}
+          />
+        );
+      case 1:
+        return (
+          <InstructorStep
+            clientId={currentClient}
+            setInstructorResId={setInstructorRes}
+            setStep={setNewStep}
+          />
+        );
     }
   };
 

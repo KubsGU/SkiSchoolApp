@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { Client, FormElement, SelectOptions } from "types/types";
 import s from "./../../App.module.scss";
 
@@ -11,7 +11,11 @@ export const ClientnForm: FormElement[] = [
   { name: "Telefon", type: "tel", id: "phoneNumber" },
 ];
 
-const ClientStep = (setClientId: Function, setStep: Function) => {
+const ClientStep: FC<{
+  setClientId: (clientId: number | undefined) => void;
+  setStep: (step: number) => void;
+  currentClient: number | undefined;
+}> = ({ setClientId, setStep, currentClient }) => {
   const [loading, setLoading] = useState<boolean>();
   const [newClient, setNewClient] = useState<boolean>();
   const [clientsList, setClientsList] = useState<Client[]>();
@@ -23,7 +27,7 @@ const ClientStep = (setClientId: Function, setStep: Function) => {
         const data = await fetch(`${process.env.REACT_APP_IP}/Clients`);
         const res = await data.json();
         setClientsList(res.items);
-        setTmpClient(res.items[0]?.id);
+        setTmpClient(currentClient ?? res.items[0]?.id);
       } catch (e) {
         console.log(e);
       }
@@ -112,7 +116,10 @@ const ClientStep = (setClientId: Function, setStep: Function) => {
       {!newClient && (
         <Fragment>
           <label>Wybierz klienta</label>
-          <select onChange={(e) => setClientId(+e.target.value)}>
+          <select
+            onChange={(e) => setClientId(+e.target.value)}
+            value={currentClient}
+          >
             {clientsList &&
               clientsList.map((e, i) => {
                 return (

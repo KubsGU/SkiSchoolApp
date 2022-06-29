@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { Client, FormElement, Trainers } from "types/types";
 import s from "./../../App.module.scss";
 
@@ -7,11 +7,11 @@ const form: FormElement[] = [
   { name: "Data końca", type: "datetime-local", id: "endtDate" },
 ];
 
-const InstructorStep = (
-  clientId: number | undefined,
-  setInstructorResId: Function,
-  setStep: Function
-) => {
+const InstructorStep: FC<{
+  clientId: number | undefined;
+  setInstructorResId: (res: number | undefined) => void;
+  setStep: (id: number) => void;
+}> = ({ clientId, setInstructorResId, setStep }) => {
   const [loading, setLoading] = useState<boolean>();
   const [instructorId, setInstructorId] = useState<number>();
   const [instructors, setInstructors] = useState<Trainers>();
@@ -28,6 +28,8 @@ const InstructorStep = (
     };
     fetchData();
   }, []);
+
+  console.log(clientId);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -102,6 +104,9 @@ const InstructorStep = (
           })}
       </select>
       <div className={s.add}>
+        <button onClick={() => setStep(0)} form="instructorForm">
+          Powrót
+        </button>
         <button type="submit" form="instructorForm">
           Dalej
         </button>
