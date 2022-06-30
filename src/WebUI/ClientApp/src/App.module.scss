@@ -58,6 +58,14 @@
   @apply mt-8 w-4/6 text-right self-end cursor-pointer;
 }
 
+.next {
+  @apply mt-8 text-right self-end cursor-pointer;
+}
+
+.prev {
+  @apply mt-8 text-left self-end cursor-pointer;
+}
+
 .addContainer {
   @apply flex items-center;
 

@@ -129,7 +129,8 @@ const ClientStep: FC<{
             </select>
           </>
         )}
-        <div className={s.add}>
+        <div></div>
+        <div className={s.next}>
           <button type="submit" form="clientForm">
             Dalej
           </button>
