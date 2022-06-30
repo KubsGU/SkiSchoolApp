@@ -53,3 +53,5 @@ public class CreateRentalReportCommandHandler : IRequestHandler<CreateRentalRepo
     }
 
 }
+//TODO fix bug with payment amount
+//TODO create report for rentals and timetables

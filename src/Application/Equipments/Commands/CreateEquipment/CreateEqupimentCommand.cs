@@ -14,7 +14,6 @@ public class CreateEquipmentCommand : IRequest<int>
     public string Name { get; set; }
     public string Type { get; set; }
     public decimal Price { get; set; }
-    public bool IsActive { get; set; }
 }
 
 public class CreateEquipmentCommandHandler : IRequestHandler<CreateEquipmentCommand, int>
@@ -30,7 +29,7 @@ public class CreateEquipmentCommandHandler : IRequestHandler<CreateEquipmentComm
     {
         var entity = new Equipment
         {
-            IsActive = request.IsActive,
+            IsActive = true,
             Name = request.Name,
             Price = request.Price,
             Type = request.Type

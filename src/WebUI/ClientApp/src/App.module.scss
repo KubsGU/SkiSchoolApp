@@ -1,21 +1,21 @@
 @import "./styles/base.scss";
 
 .app {
- @apply flex justify-center items-center w-full p-6;
+  @apply flex justify-center items-center w-full p-6;
 
- img {
+  img {
     box-shadow: 0px 0px 14px -4px rgba(66, 68, 90, 1);
- }
+  }
 }
 
 .title {
-   @apply text-xl mb-6;
- }
+  @apply text-xl mb-6;
+}
 
- .select {
+.select {
   @apply mb-10 w-2/5;
- }
- 
+}
+
 .form {
   @apply grid gap-4 w-4/6 content-center;
   grid-template-columns: 10rem auto;
@@ -38,7 +38,7 @@
     thead {
       tr {
         th {
-          @apply border-b font-medium p-4 pl-8 pt-0 pb-3 text-white text-left
+          @apply border-b font-medium p-4 pl-8 pt-0 pb-3 text-white text-left;
         }
       }
     }
@@ -46,8 +46,8 @@
       @apply bg-white dark:bg-slate-800;
       tr {
         td {
-            @apply border-b border-slate-100 p-4 pl-8;
-            @extend .col-1
+          @apply border-b border-slate-100 p-4 pl-8;
+          @extend .col-1;
         }
       }
     }
@@ -62,11 +62,11 @@
   @apply flex items-center;
 
   i {
-    @apply h-min ml-3
+    @apply h-min ml-3;
   }
 
   select {
-    @apply h-full
+    @apply h-full;
   }
 }
 
@@ -81,9 +81,9 @@
 }
 
 .selectContainer {
-  @apply flex flex-row justify-between  w-4/6 mb-10;
+  @apply flex gap-4  w-4/6 mb-10;
 
   select {
-      @apply w-3/5;
+    @apply w-3/5;
   }
 }

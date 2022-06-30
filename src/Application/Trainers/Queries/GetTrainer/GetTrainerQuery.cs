@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using SkiSchool.Application.Common.Interfaces;
 using SkiSchool.Application.Common.Mappings;
 using SkiSchool.Application.Common.Models;
@@ -22,7 +23,7 @@ public class GetTrainerQueryHandler : IRequestHandler<GetTrainerQuery, Paginated
 
     async public Task<PaginatedList<TrainerDto>> Handle(GetTrainerQuery request, CancellationToken cancellationToken)
     {
-        var trainerList = await _context.Trainer.Where(t => t.IsActive)
+        var trainerList = await _context.Trainer.Include(t => t.Schedule).Where(t => t.IsActive)
             .ProjectTo<TrainerDto>(_mapper.ConfigurationProvider)
             .PaginatedListAsync(1,1000);
 

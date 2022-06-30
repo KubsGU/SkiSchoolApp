@@ -9,5 +9,4 @@ public class TimetableDto : IMapFrom<Timetable>
     public DateTime EndDate { get; set; }
     public Trainer Trainer { get; set; }
     public Client Client { get; set; }
-    public bool IsCancelled { get; set; }
 }

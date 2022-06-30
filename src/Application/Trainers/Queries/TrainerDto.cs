@@ -9,5 +9,6 @@ public class TrainerDto : IMapFrom<Trainer>
     public string Surname { get; set; }
     public decimal Price { get; set; }
     public string TypeOfService { get; set; }
-    public bool IsActive { get; set; }
+    public string StartTime { get; set; }
+    public string EndTime { get; set; }
 }
