@@ -150,12 +150,12 @@ const EquipentStep: FC<{
           </i>
         </div>
 
-        <div className={s.add}>
+        <div className={s.prev}>
           <button onClick={() => setStep(1)} form="instructorForm">
             Powrót
           </button>
         </div>
-        <div className={s.add}>
+        <div className={s.next}>
           <button type="submit" form="instructorForm">
             Dalej
           </button>
