@@ -25,6 +25,13 @@ public class TrainersController : ApiControllerBase
         return await Mediator.Send(new GetTrainerByIdQuery { Id = id });
     }
 
+    [HttpGet]
+    [Route("available")]
+    public async Task<ActionResult<List<TrainerDto>>> GetTrainerById([FromQuery]GetAvailableTrainersQuery query)
+    {
+        return await Mediator.Send(query);
+    }
+
     [HttpPost]
     public async Task<ActionResult<int>> Create(CreateTrainerCommand command)
     {
