@@ -11,10 +11,12 @@ const InstructorStep: FC<{
   clientId: number | undefined;
   setInstructorResId: (res: number | undefined) => void;
   setStep: (id: number) => void;
-}> = ({ clientId, setInstructorResId, setStep }) => {
+  instructorPrice: (price: number) => void;
+}> = ({ clientId, setInstructorResId, setStep, instructorPrice }) => {
   const [loading, setLoading] = useState<boolean>();
   const [instructorId, setInstructorId] = useState<number>();
   const [instructors, setInstructors] = useState<Trainers>();
+  const [price, setPrice] = useState<number>();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,7 +31,13 @@ const InstructorStep: FC<{
     fetchData();
   }, []);
 
-  console.log(clientId);
+  const setInstructor = (e: any) => {
+    setInstructorId(+e.target.value);
+    const instruktor =
+      instructors && instructors.items.find((el) => el.id === +e.target.value);
+    console.log(instruktor?.price);
+    setPrice(instruktor?.price);
+  };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -53,6 +61,7 @@ const InstructorStep: FC<{
         const res = data.json().then((e) => {
           if (e) {
             setInstructorResId(e);
+            instructorPrice(price as number);
             setLoading(false);
             setStep(2);
           }
@@ -61,7 +70,7 @@ const InstructorStep: FC<{
         console.log(e);
       }
     } else {
-        setStep(2);
+      setStep(2);
     }
   };
   return (
@@ -90,7 +99,7 @@ const InstructorStep: FC<{
             );
           })}
         <label>Wybierz Instruktora</label>
-        <select onChange={(e) => setInstructorId(+e.target.value)}>
+        <select onChange={setInstructor}>
           <option key={0} value={undefined}>
             Instruktor
           </option>

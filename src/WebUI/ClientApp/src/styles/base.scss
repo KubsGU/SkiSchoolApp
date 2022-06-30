@@ -56,3 +56,19 @@ button,
     @extend .bg-col-2;
   }
 }
+
+.equSelect {
+  @apply mb-2;
+}
+
+.chip {
+  background-color: #16697a !important;
+}
+
+.highlightOption {
+  background-color: #16697a !important;
+}
+
+.option:hover {
+  background-color: #16697a !important;
+}

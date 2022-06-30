@@ -27,6 +27,7 @@ const ClientStep: FC<{
         const data = await fetch(`${process.env.REACT_APP_IP}/Clients`);
         const res = await data.json();
         setClientsList(res.items);
+        setClientId(currentClient ?? res.items[0]?.id);
         setTmpClient(currentClient ?? res.items[0]?.id);
       } catch (e) {
         console.log(e);
@@ -80,65 +81,66 @@ const ClientStep: FC<{
   };
   return (
     <Fragment>
-    <p className={s.title}>Wprowadz klienta</p>
-    <form className={s.form} id="clientForm" onSubmit={handleSubmit}>
-      <label>Nowy klient</label>
-      <input type="checkbox" name="newClient" onChange={handleCheckbox} />
-      {newClient &&
-        ClientnForm.map((el, i) => {
-          return (
-            <Fragment key={el.id}>
-              <label htmlFor={el.name}>{el.name}</label>
-              {el.selectOptions?.length ? (
-                <select
-                  id={el.id}
-                  name={el.name}
-                  multiple={el.multiselect}
-                  required
-                >
-                  {el.selectOptions.map((op, i) => {
-                    return (
-                      <option key={op.id} value={op.id}>
-                        {op.label}
-                      </option>
-                    );
-                  })}
-                </select>
-              ) : (
-                <input
-                  type={el.type}
-                  id={el.id}
-                  name={el.name}
-                  required
-                ></input>
-              )}
-            </Fragment>
-          );
-        })}
-      {!newClient && (
-        <Fragment>
-          <label>Wybierz klienta</label>
-          <select
-            onChange={(e) => setClientId(+e.target.value)}
-            value={currentClient}
-          >
-            {clientsList &&
-              clientsList.map((e, i) => {
-                return (
-                  <option key={i} value={e.id}>
-                    {`${e.name} ${e.surname}, pesel: ${e.pesel}`}
-                  </option>
-                );
-              })}
-          </select>
-        </Fragment>
-      )}
-      <div className={s.add}>
-        <button type="submit" form="clientForm">
-          Dalej
-        </button>
-      </div>
-    </form></Fragment>
+      <p className={s.title}>Wprowadz klienta</p>
+      <form className={s.form} id="clientForm" onSubmit={handleSubmit}>
+        <label>Nowy klient</label>
+        <input type="checkbox" name="newClient" onChange={handleCheckbox} />
+        {newClient &&
+          ClientnForm.map((el, i) => {
+            return (
+              <Fragment key={el.id}>
+                <label htmlFor={el.name}>{el.name}</label>
+                {el.selectOptions?.length ? (
+                  <select
+                    id={el.id}
+                    name={el.name}
+                    multiple={el.multiselect}
+                    required
+                  >
+                    {el.selectOptions.map((op, i) => {
+                      return (
+                        <option key={op.id} value={op.id}>
+                          {op.label}
+                        </option>
+                      );
+                    })}
+                  </select>
+                ) : (
+                  <input
+                    type={el.type}
+                    id={el.id}
+                    name={el.name}
+                    required
+                  ></input>
+                )}
+              </Fragment>
+            );
+          })}
+        {!newClient && (
+          <Fragment>
+            <label>Wybierz klienta</label>
+            <select
+              onChange={(e) => setClientId(+e.target.value)}
+              value={currentClient}
+            >
+              {clientsList &&
+                clientsList.map((e, i) => {
+                  return (
+                    <option key={i} value={e.id}>
+                      {`${e.name} ${e.surname}, pesel: ${e.pesel}`}
+                    </option>
+                  );
+                })}
+            </select>
+          </Fragment>
+        )}
+        <div className={s.add}>
+          <button type="submit" form="clientForm">
+            Dalej
+          </button>
+        </div>
+      </form>
+    </Fragment>
   );
 };
 
