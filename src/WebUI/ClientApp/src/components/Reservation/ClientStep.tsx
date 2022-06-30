@@ -5,7 +5,7 @@ import s from "./../../App.module.scss";
 export const ClientnForm: FormElement[] = [
   { name: "Imie", type: "text", id: "name" },
   { name: "Nazwisko", type: "text", id: "surname" },
-  { name: "Nr dowodu", type: "number", id: "idNo" },
+  { name: "Nr dowodu", type: "text", id: "idNo" },
   { name: "Pesel", type: "number", id: "pesel" },
   { name: "E-Mail", type: "email", id: "email" },
   { name: "Telefon", type: "tel", id: "phoneNumber" },
