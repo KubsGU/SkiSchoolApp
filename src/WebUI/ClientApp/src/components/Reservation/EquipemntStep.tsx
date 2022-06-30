@@ -100,19 +100,34 @@ const EquipentStep: FC<{
       <p className={s.title}>Wprowadz sprzęt</p>
       <form className={s.form} id="instructorForm" onSubmit={handleSubmit}>
         <label htmlFor="Data startu">Data startu</label>
-        <input
+        <input disabled={!!selectedEquipments?.length}
           type="datetime-local"
           id="startDate"
           name="Data startu"
           onChange={(e) => setStartDate(e.target.value)}
         ></input>
         <label htmlFor="Data końca">Data końca</label>
-        <input
+        <input disabled={!!selectedEquipments?.length}
           type="datetime-local"
           id="endtDate"
           name="Data końca"
           onChange={(e) => setEndDate(e.target.value)}
         ></input>
+        {usedTypes.map((el, i) => {
+          return (
+            <Fragment>
+              <label>{`${el.equipmentsType}`}</label>
+              <div key={i} className="equSelect">
+                <Multiselect
+                  options={el.children}
+                  displayValue="name"
+                  onSelect={selectEquimpent}
+                  onRemove={deleteEquimpent}
+                ></Multiselect>
+              </div>
+            </Fragment>
+          );
+        })}
         <label>Dodaj sprzęt danego typu</label>
         <div className={s.addContainer}>
           <select onChange={(e) => setEquipmentsType(e.target.value)}>
@@ -134,21 +149,7 @@ const EquipentStep: FC<{
             add
           </i>
         </div>
-        <div></div>
-        <div>
-          {usedTypes.map((el, i) => {
-            return (
-              <div key={i} className="equSelect">
-                <Multiselect
-                  options={el.children}
-                  displayValue="name"
-                  onSelect={selectEquimpent}
-                  onRemove={deleteEquimpent}
-                ></Multiselect>
-              </div>
-            );
-          })}
-        </div>
+
         <div className={s.add}>
           <button onClick={() => setStep(1)} form="instructorForm">
             Powrót
