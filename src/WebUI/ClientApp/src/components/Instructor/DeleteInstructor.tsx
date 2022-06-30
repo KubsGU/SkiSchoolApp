@@ -33,7 +33,7 @@ const DeleteInstructor = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetch(`${process.env.REACT_APP_IP}/api/Trainers`);
+        const data = await fetch(`${process.env.REACT_APP_IP}/Trainers`);
         const res = await data.json();
         setInstructors(res);
         setinstructorId(res.items[0].id);
