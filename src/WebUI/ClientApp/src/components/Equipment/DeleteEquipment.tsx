@@ -1,6 +1,5 @@
-import { equipmentOptions } from "components/Reservation/Reservation";
 import { useEffect, useState } from "react";
-import { Equipment, Equipments } from "types/types";
+import { Equipments } from "types/types";
 import s from "./../../App.module.scss";
 
 const DeleteEquipment = () => {
@@ -40,16 +39,17 @@ const DeleteEquipment = () => {
       <p className={s.title}>Usuń sprzet</p>
 
       <div className={s.selectContainer}>
-        <select  onChange={(e) => setEquipmentId(+e.target.value)}>
-          {equipment && equipment.items.map((op) => {
-            return (
-              <option key={op.id} value={op.id}>
-                {`${op.name}, ${op.price}zł`}
-              </option>
-            );
-          })}
+        <select onChange={(e) => setEquipmentId(+e.target.value)}>
+          {equipment &&
+            equipment.items.map((op) => {
+              return (
+                <option key={op.id} value={op.id}>
+                  {`${op.name}, ${op.price}zł`}
+                </option>
+              );
+            })}
         </select>
-    
+
         <button
           type="submit"
           form="form"

@@ -1,27 +1,9 @@
-import { EquipmentList } from "components/Equipment/DisplayEquipment";
-import { InstructorsList } from "components/Instructor/DisplayInstructor";
 import { useState } from "react";
-import { FormElement, SelectOptions } from "types/types";
+import { FormElement } from "types/types";
 import ClientStep from "./ClientStep";
 import EquipentStep from "./EquipemntStep";
 import InstructorStep from "./InstructorStep";
 import PaymentStep from "./PaymentStep";
-
-export const instructorsOptions: SelectOptions[] = InstructorsList.map(
-  (inst) => {
-    return {
-      id: inst.id,
-      label: inst.name + " " + inst.surname + ", " + inst.price + "zł",
-    };
-  }
-);
-
-export const equipmentOptions: SelectOptions[] = EquipmentList.map((inst) => {
-  return {
-    id: inst.id,
-    label: inst.name + " " + inst.type + ", " + inst.price + "zł",
-  };
-});
 
 export const CLientnForm: FormElement[] = [
   { name: "Imie", type: "text", id: "name" },
@@ -40,7 +22,6 @@ export const ReservationForm: FormElement[] = [
     name: "Instruktor (opcjonalne)",
     type: "number",
     id: "idIns",
-    selectOptions: instructorsOptions,
   },
 ];
 

@@ -21,7 +21,6 @@ const PaymentStep: FC<{
       date: localISOTime,
     };
 
-    console.log(new Date(Date.now()).toISOString());
     try {
       await fetch(`${process.env.REACT_APP_IP}/Payments`, {
         method: "POST",
@@ -39,11 +38,6 @@ const PaymentStep: FC<{
     <>
       <p className={s.title}>Opłacenie</p>
       <button onClick={handlePayment}>Oplać</button>
-      {/* <div className={s.add}>
-        <button onClick={() => setStep(2)} form="instructorForm">
-          Powrót
-        </button>
-      </div> */}
     </>
   );
 };

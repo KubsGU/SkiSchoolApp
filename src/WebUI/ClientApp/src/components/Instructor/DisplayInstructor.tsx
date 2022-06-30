@@ -1,35 +1,7 @@
 import { useEffect, useState } from "react";
-import { Instuctor } from "types/types";
 import s from "./../../App.module.scss";
 import { InstructorForm } from "./AddInstructor";
 import { Trainers } from "types/types";
-
-export const InstructorsList: Instuctor[] = [
-  {
-    id: 1,
-    name: "Jakub",
-    surname: "Jelonek",
-    price: 100,
-    typeOfService: "-",
-    workHours: "8:00-16:00",
-  },
-  {
-    id: 2,
-    name: "Jan",
-    surname: "Pływak",
-    price: 150,
-    typeOfService: "-",
-    workHours: "8:00-16:00",
-  },
-  {
-    id: 3,
-    name: "Gołkowski",
-    surname: "Tomasz",
-    price: 2,
-    typeOfService: "Dzieci",
-    workHours: "8:00-16:00",
-  },
-];
 
 const DisplayInstructor = () => {
   const [instructors, setInstructors] = useState<Trainers>();
@@ -72,7 +44,7 @@ const DisplayInstructor = () => {
               })}
           </tbody>
         </table>
-      </div>{" "}
+      </div>
     </div>
   );
 };

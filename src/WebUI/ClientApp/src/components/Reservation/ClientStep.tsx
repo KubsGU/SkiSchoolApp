@@ -1,5 +1,5 @@
 import { FC, Fragment, useEffect, useState } from "react";
-import { Client, FormElement, SelectOptions } from "types/types";
+import { Client, FormElement } from "types/types";
 import s from "./../../App.module.scss";
 
 export const ClientnForm: FormElement[] = [
@@ -16,10 +16,8 @@ const ClientStep: FC<{
   setStep: (step: number) => void;
   currentClient: number | undefined;
 }> = ({ setClientId, setStep, currentClient }) => {
-  const [loading, setLoading] = useState<boolean>();
   const [newClient, setNewClient] = useState<boolean>();
   const [clientsList, setClientsList] = useState<Client[]>();
-  const [tmpClient, setTmpClient] = useState<number>();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,7 +26,6 @@ const ClientStep: FC<{
         const res = await data.json();
         setClientsList(res.items);
         setClientId(currentClient ?? res.items[0]?.id);
-        setTmpClient(currentClient ?? res.items[0]?.id);
       } catch (e) {
         console.log(e);
       }
@@ -48,7 +45,6 @@ const ClientStep: FC<{
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (newClient) {
-      setLoading(true);
       const body = {
         name: e.target.name.value,
         surname: e.target.surname.value,
@@ -68,7 +64,6 @@ const ClientStep: FC<{
         const res = data.json().then((e) => {
           if (e) {
             setClientId(e);
-            setLoading(false);
             setStep(1);
           }
         });
@@ -80,7 +75,7 @@ const ClientStep: FC<{
     }
   };
   return (
-    <Fragment>
+    <>
       <p className={s.title}>Wprowadz klienta</p>
       <form className={s.form} id="clientForm" onSubmit={handleSubmit}>
         <label>Nowy klient</label>
@@ -117,7 +112,7 @@ const ClientStep: FC<{
             );
           })}
         {!newClient && (
-          <Fragment>
+          <>
             <label>Wybierz klienta</label>
             <select
               onChange={(e) => setClientId(+e.target.value)}
@@ -132,7 +127,7 @@ const ClientStep: FC<{
                   );
                 })}
             </select>
-          </Fragment>
+          </>
         )}
         <div className={s.add}>
           <button type="submit" form="clientForm">
@@ -140,7 +135,7 @@ const ClientStep: FC<{
           </button>
         </div>
       </form>
-    </Fragment>
+    </>
   );
 };
 

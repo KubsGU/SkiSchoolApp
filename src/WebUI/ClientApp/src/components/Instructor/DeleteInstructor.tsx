@@ -1,4 +1,3 @@
-import { instructorsOptions } from "components/Reservation/Reservation";
 import { useEffect, useState } from "react";
 import { Trainers } from "types/types";
 import s from "./../../App.module.scss";
@@ -24,7 +23,7 @@ const DeleteInstructor = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetch(`http://localhost:5002/api/Trainers`);
+        const data = await fetch(`${process.env.REACT_APP_IP}/api/Trainers`);
         const res = await data.json();
         setInstructors(res);
         setinstructorId(res.items[0].id);

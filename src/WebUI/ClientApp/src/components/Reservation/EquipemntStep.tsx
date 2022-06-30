@@ -1,12 +1,6 @@
 import { FC, Fragment, useEffect, useState } from "react";
-import { Client, FormElement, Trainers } from "types/types";
 import s from "./../../App.module.scss";
 import Multiselect from "multiselect-react-dropdown";
-
-const Form: FormElement[] = [
-  { name: "Data startu", type: "datetime-local", id: "startDate" },
-  { name: "Data końca", type: "datetime-local", id: "endtDate" },
-];
 
 const EquipentStep: FC<{
   clientId: number | undefined;
@@ -14,14 +8,13 @@ const EquipentStep: FC<{
   setStep: (id: number) => void;
   setEquipmentPrice: (price: number) => void;
 }> = ({ clientId, setEquipmentResId, setStep, setEquipmentPrice }) => {
-  const [loading, setLoading] = useState<boolean>();
-  const [equipmentIds, setEquipmentIds] = useState<number[]>();
   const [equipmentsTypes, setEquipmentsTypes] = useState<string[]>();
   const [equipmentsType, setEquipmentsType] = useState<string>();
-  const [reservationForm, setReservationForm] = useState<FormElement[]>(Form);
   const [usedTypes, setUsedTypes] = useState<any[]>([]);
   const [selectedEquipments, setSelectedEquipments] = useState<any[]>([]);
   const [price, setPrice] = useState<number>(0);
+  const [startDate, setStartDate] = useState<string>();
+  const [endDate, setEndDate] = useState<string>();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,30 +44,27 @@ const EquipentStep: FC<{
     setPrice(price - removedItem.price);
   };
 
-  const show = () => {
-    console.log(selectedEquipments);
-  };
-
   const handleAddEqu = async () => {
-    try {
-      const data = await fetch(
-        `${process.env.REACT_APP_IP}/Equipments/byTypes?Type=${equipmentsType}`
-      );
-      const res = await data.json();
-      if (!usedTypes.some((el) => el.equipmentsType === equipmentsType))
-        setUsedTypes((oldArray) => [
-          ...oldArray,
-          { equipmentsType, children: res },
-        ]);
-    } catch (e) {
-      console.log(e);
+    if (startDate && endDate) {
+      try {
+        const data = await fetch(
+          `${process.env.REACT_APP_IP}/Equipments/byTypes?Type=${equipmentsType}&StartDate=${startDate}&endDate=${endDate}`
+        );
+        const res = await data.json();
+        if (!usedTypes.some((el) => el.equipmentsType === equipmentsType))
+          setUsedTypes((oldArray) => [
+            ...oldArray,
+            { equipmentsType, children: res },
+          ]);
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (selectedEquipments) {
-      setLoading(true);
       const body = {
         startDate: e.target.startDate.value,
         endDate: e.target.endtDate.value,
@@ -95,7 +85,6 @@ const EquipentStep: FC<{
             console.log(price);
             setEquipmentResId(e);
             setEquipmentPrice(price);
-            setLoading(false);
             setStep(3);
           }
         });
@@ -107,30 +96,23 @@ const EquipentStep: FC<{
     }
   };
   return (
-    <Fragment>
+    <>
       <p className={s.title}>Wprowadz sprzęt</p>
       <form className={s.form} id="instructorForm" onSubmit={handleSubmit}>
-        {reservationForm &&
-          reservationForm.map((el, i) => {
-            return (
-              <Fragment key={el.id}>
-                <label htmlFor={el.name}>{el.name}</label>
-                {el.selectOptions?.length ? (
-                  <select id={el.id} name={el.name} multiple={el.multiselect}>
-                    {el.selectOptions.map((op, i) => {
-                      return (
-                        <option key={op.id} value={op.id}>
-                          {op.label}
-                        </option>
-                      );
-                    })}
-                  </select>
-                ) : (
-                  <input type={el.type} id={el.id} name={el.name}></input>
-                )}
-              </Fragment>
-            );
-          })}
+        <label htmlFor="Data startu">Data startu</label>
+        <input
+          type="datetime-local"
+          id="startDate"
+          name="Data startu"
+          onChange={(e) => setStartDate(e.target.value)}
+        ></input>
+        <label htmlFor="Data końca">Data końca</label>
+        <input
+          type="datetime-local"
+          id="endtDate"
+          name="Data końca"
+          onChange={(e) => setEndDate(e.target.value)}
+        ></input>
         <label>Dodaj sprzęt danego typu</label>
         <div className={s.addContainer}>
           <select onChange={(e) => setEquipmentsType(e.target.value)}>
@@ -178,7 +160,7 @@ const EquipentStep: FC<{
           </button>
         </div>
       </form>
-    </Fragment>
+    </>
   );
 };
 

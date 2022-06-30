@@ -53,7 +53,7 @@ const DisplayEquipment = () => {
               })}
           </tbody>
         </table>
-      </div>{" "}
+      </div>
     </div>
   );
 };

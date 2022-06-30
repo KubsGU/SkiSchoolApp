@@ -1,11 +1,5 @@
 import { FC, Fragment, useEffect, useState } from "react";
-import { Client, FormElement, Trainers } from "types/types";
 import s from "./../../App.module.scss";
-
-const form: FormElement[] = [
-  { name: "Data startu", type: "datetime-local", id: "startDate" },
-  { name: "Data końca", type: "datetime-local", id: "endtDate" },
-];
 
 const InstructorStep: FC<{
   clientId: number | undefined;
@@ -13,36 +7,39 @@ const InstructorStep: FC<{
   setStep: (id: number) => void;
   instructorPrice: (price: number) => void;
 }> = ({ clientId, setInstructorResId, setStep, instructorPrice }) => {
-  const [loading, setLoading] = useState<boolean>();
   const [instructorId, setInstructorId] = useState<number>();
-  const [instructors, setInstructors] = useState<Trainers>();
+  const [instructors, setInstructors] = useState<any[]>([]);
   const [price, setPrice] = useState<number>();
+  const [startDate, setStartDate] = useState<string>();
+  const [endDate, setEndDate] = useState<string>();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetch(`${process.env.REACT_APP_IP}/Trainers`);
+        const data = await fetch(
+          `${process.env.REACT_APP_IP}/Trainers/available?StartDate=${startDate}&EndDate=${endDate}`
+        );
         const res = await data.json();
         setInstructors(res);
       } catch (e) {
         console.log(e);
       }
     };
-    fetchData();
-  }, []);
+    if (startDate && endDate) {
+      fetchData();
+    }
+  }, [startDate, endDate]);
 
   const setInstructor = (e: any) => {
     setInstructorId(+e.target.value);
     const instruktor =
-      instructors && instructors.items.find((el) => el.id === +e.target.value);
-    console.log(instruktor?.price);
+      instructors && instructors.find((el) => el.id === +e.target.value);
     setPrice(instruktor?.price);
   };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (instructorId) {
-      setLoading(true);
       const body = {
         startDate: e.target.startDate.value,
         endDate: e.target.endtDate.value,
@@ -62,7 +59,6 @@ const InstructorStep: FC<{
           if (e) {
             setInstructorResId(e);
             instructorPrice(price as number);
-            setLoading(false);
             setStep(2);
           }
         });
@@ -77,34 +73,27 @@ const InstructorStep: FC<{
     <Fragment>
       <p className={s.title}>Wprowadz instruktora</p>
       <form className={s.form} id="instructorForm" onSubmit={handleSubmit}>
-        {form &&
-          form.map((el, i) => {
-            return (
-              <Fragment key={el.id}>
-                <label htmlFor={el.name}>{el.name}</label>
-                {el.selectOptions?.length ? (
-                  <select id={el.id} name={el.name} multiple={el.multiselect}>
-                    {el.selectOptions.map((op, i) => {
-                      return (
-                        <option key={op.id} value={op.id}>
-                          {op.label}
-                        </option>
-                      );
-                    })}
-                  </select>
-                ) : (
-                  <input type={el.type} id={el.id} name={el.name}></input>
-                )}
-              </Fragment>
-            );
-          })}
+        <label htmlFor="Data startu">Data startu</label>
+        <input
+          type="datetime-local"
+          id="startDate"
+          name="Data startu"
+          onChange={(e) => setStartDate(e.target.value)}
+        ></input>
+        <label htmlFor="Data końca">Data końca</label>
+        <input
+          type="datetime-local"
+          id="endtDate"
+          name="Data końca"
+          onChange={(e) => setEndDate(e.target.value)}
+        ></input>
         <label>Wybierz Instruktora</label>
         <select onChange={setInstructor}>
           <option key={0} value={undefined}>
             Instruktor
           </option>
           {instructors &&
-            instructors.items.map((e, i) => {
+            instructors.map((e, i) => {
               return (
                 <option key={i} value={e.id}>
                   {`${e.name} ${e.surname}, ${e.price}zł`}
