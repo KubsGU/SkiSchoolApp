@@ -11,7 +11,7 @@ interface Children {
 
 export type FormElement = {
   name: string;
-  type: "number" | "text" | "datetime-local" | "checkbox" | "email" | "tel";
+  type: "number" | "text" | "datetime-local" | "checkbox" | "email" | "tel"| "time";
   id: string;
   selectOptions?: SelectOptions[];
   multiselect?: boolean;
@@ -58,6 +58,7 @@ export type Equipments = {
 };
 
 export type Client = {
+  id?: number;
   name: string;
   surname: string;
   email: string;
@@ -65,3 +66,23 @@ export type Client = {
   pesel: string;
   phoneNumber: string;
 };
+
+export type Rental = {
+  id: number;
+  client: Client;
+}
+
+export type Timetable = {
+  id: number;
+  client: Client;
+  trainer: Instuctor;
+}
+
+
+export type Timetables = {
+  items: Timetable[]
+}
+
+export type Rentals = {
+  items: Rental[]
+}

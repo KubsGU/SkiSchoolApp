@@ -29,7 +29,7 @@ const DisplayEquipment = () => {
 
   return (
     <div>
-      <p className={s.title}>Wszyscy instruktorzy</p>
+      <p className={s.title}>Cały sprzęt</p>
       <div className={s.table}>
         <table className="table-auto">
           <thead>
@@ -53,7 +53,7 @@ const DisplayEquipment = () => {
               })}
           </tbody>
         </table>
-      </div>{" "}
+      </div>
     </div>
   );
 };
