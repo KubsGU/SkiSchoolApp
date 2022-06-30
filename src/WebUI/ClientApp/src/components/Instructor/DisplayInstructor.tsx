@@ -20,7 +20,7 @@ const DisplayInstructor = () => {
   }, []);
   return (
     <div>
-      <p className={s.title}>Wszyscy instrusktorzy</p>
+      <p className={s.title}>Wszyscy instruktorzy</p>
       <div className={s.table}>
         <table className="table-auto">
           <thead>

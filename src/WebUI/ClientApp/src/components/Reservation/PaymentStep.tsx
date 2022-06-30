@@ -1,5 +1,7 @@
 import { FC } from "react";
 import s from "./../../App.module.scss";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const PaymentStep: FC<{
   timetableId: number | undefined;
@@ -7,6 +9,12 @@ const PaymentStep: FC<{
   price: number;
   setStep: (page: number) => void;
 }> = ({ timetableId, rentalId, price, setStep }) => {
+  const notifySuccess = () => {
+    toast.success("Pomyślnie opłacono rezerwacje");
+  };
+  const notifyError = () => {
+    toast.error("Wystąpił problem. Spróbuj ponownie");
+  };
   const handlePayment = async () => {
     const tzoffset = new Date().getTimezoneOffset() * 60000;
     const localISOTime = new Date(Date.now() - tzoffset)
@@ -28,8 +36,12 @@ const PaymentStep: FC<{
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      setStep(0);
+      notifySuccess();
+      setTimeout(() => {
+        setStep(0);
+      }, 3000);
     } catch (e) {
+      notifyError();
       console.log(e);
     }
   };
@@ -38,6 +50,16 @@ const PaymentStep: FC<{
     <>
       <p className={s.title}>Opłacenie</p>
       <button onClick={handlePayment}>Oplać</button>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={2500}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </>
   );
 };
