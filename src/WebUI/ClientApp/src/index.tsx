@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.scss";
 import App from "./App";
@@ -12,7 +11,6 @@ import AddEquipment from "components/Equipment/AddEquipment";
 import DisplayEquipment from "components/Equipment/DisplayEquipment";
 import DeleteEquipment from "components/Equipment/DeleteEquipment";
 import DeleteReservation from "components/Reservation/DeleteReservation";
-import PayReservation from "components/Reservation/PayReservation";
 import Raport from "components/Raport/Raport";
 
 const root = ReactDOM.createRoot(
@@ -42,7 +40,6 @@ root.render(
             {/* <Route path="/sprzet/edytuj" element={<EditEquipment />} /> */}
             <Route path="/rezerwacja/rezerwuj" element={<Reservation />} />
             <Route path="/rezerwacja/anuluj" element={<DeleteReservation />} />
-            <Route path="/rezerwacja/oplac" element={<PayReservation />} />
             <Route path="/raport" element={<Raport />} />
             <Route
               path="*"

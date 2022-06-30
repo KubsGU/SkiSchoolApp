@@ -66,3 +66,23 @@ export type Client = {
   pesel: string;
   phoneNumber: string;
 };
+
+export type Rental = {
+  id: number;
+  client: Client;
+}
+
+export type Timetable = {
+  id: number;
+  client: Client;
+  trainer: Instuctor;
+}
+
+
+export type Timetables = {
+  items: Timetable[]
+}
+
+export type Rentals = {
+  items: Rental[]
+}
