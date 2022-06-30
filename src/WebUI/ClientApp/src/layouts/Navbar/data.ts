@@ -51,10 +51,6 @@ export const navbarElements: Navbar[] = [
         link: "rezerwacja/rezerwuj",
       },
       {
-        name: "Opłać",
-        link: "rezerwacja/oplac",
-      },
-      {
         name: "Anuluj",
         link: "rezerwacja/anuluj",
       },

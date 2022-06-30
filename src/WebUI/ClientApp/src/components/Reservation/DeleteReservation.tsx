@@ -1,14 +1,40 @@
-import { SelectOptions } from "types/types";
+import { useEffect, useState } from "react";
+import { Rental, Rentals, SelectOptions, Timetables } from "types/types";
 import s from "./../../App.module.scss";
 
-
-export const ReservationOptions: SelectOptions[] = [
-  { id: 1, label: "Reservation 1" },
-  { id: 2, label: "Reservation 2" },
-  { id: 3, label: "Reservation 3" },
-];
-
 const DeleteReservation = () => {
+  const [rentalId, setRentalId] = useState<number | undefined>();
+  const [rentals, setRentals] = useState<Rentals>();
+  const [timetableId, setTimetableId] = useState<number | undefined>();
+  const [timetables, setTimetables] = useState<Timetables>();
+  const [reload, setReload] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetch(`${process.env.REACT_APP_IP}/Rentals`);
+        const res = await data.json();
+        setRentals(res);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetch(`${process.env.REACT_APP_IP}/Timetables`);
+        const res = await data.json();
+        setTimetables(res);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }, []);
+
   const handleDelete = (e: any) => {
     e.preventDefault();
   };
@@ -16,18 +42,31 @@ const DeleteReservation = () => {
   return (
     <div>
       <p className={s.title}>Anuluj rezerwacje</p>
-
-      <div className={s.selectContainer}>
+      <form className={s.form} id="form" onSubmit={handleDelete}>
+        <label>Wybierz lekcję</label>
         <select>
-          {ReservationOptions.map((op) => {
-            return (
-              <option key={op.id} value={op.id}>
-                {op.label}
-              </option>
-            );
-          })}
+          {timetables &&
+            timetables.items.map((op) => {
+              return (
+                <option key={op.id} value={op.id}>
+                  {`${op.id}: ${op.client.name} ${op.client.surname}, ${op.trainer.name}`}
+                </option>
+              );
+            })}
         </select>
-
+        <label>Wybierz sprzęt</label>
+        <select>
+          {rentals &&
+            rentals.items.map((op) => {
+              return (
+                <option key={op.id} value={op.id}>
+                  {`${op.id}: ${op.client.name} ${op.client.surname}`}
+                </option>
+              );
+            })}
+        </select>
+      </form>
+      <div className={s.add}>
         <button
           type="submit"
           form="form"

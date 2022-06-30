@@ -10,7 +10,7 @@ export const InstructorForm: FormElement[] = [
   { name: "Cena", type: "number", id: "price" },
   { name: "Typ usługi", type: "text", id: "service" },
   { name: "Godzina startu pracy", type: "time", id: "startTime" },
-  { name: "Godzina startu pracy", type: "time", id: "endTime" },
+  { name: "Godzina końca pracy", type: "time", id: "endTime" },
 ];
 
 const AddInstructor: FC = () => {
