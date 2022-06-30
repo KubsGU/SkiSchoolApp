@@ -101,11 +101,7 @@ const InstructorStep: FC<{
               );
             })}
         </select>
-        <div className={s.prev}>
-          <button onClick={() => setStep(0)} form="instructorForm">
-            Powrót
-          </button>
-        </div>
+        <div></div>
         <div className={s.next}>
           <button type="submit" form="instructorForm">
             Dalej
